@@ -3,12 +3,8 @@ import React, { useEffect, useState } from "react";
 import {
     Input,
     VStack,
-    FormControl,
-    FormLabel,
-    Switch,
-    Button,
-    Text,
     Popover,
+    Text,
     PopoverTrigger,
     PopoverContent,
     PopoverArrow,
@@ -21,11 +17,15 @@ const MetadataInput: React.FC = () => {
 
     const [inputValue, setInputValue] = useState("");
     const [open, setOpen] = useState<boolean>(false)
+    const [previewList, setPreviewList] = useState<string[]>([]);
+
     const wordlist = ["abcd", "efgh", "hijk", "lmno"];
+    
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const preList = wordlist.filter((word) => word.includes(event.target.value));
-        if (preList.length === 0 && event.target.value.length)
+        if (preList.length === 0 && event.target.value.length) {
             setPreviewList([`create new "${event.target.value}" property`]);
+        }
         else setPreviewList(preList);
         setInputValue(event.target.value);
     };
@@ -33,7 +33,6 @@ const MetadataInput: React.FC = () => {
     const handleCreateClick = () => {
         // Implement the logic to handle the creation of the metadata
     };
-    const [previewList, setPreviewList] = useState<string[]>([]);
 
     useEffect(() => {
         if(previewList.length) setOpen(true);
@@ -42,7 +41,11 @@ const MetadataInput: React.FC = () => {
 
     const handleSet = (setStr: string): void => {
         setPreviewList([]);
-        setInputValue(setStr);
+        if (setStr.includes(`"`)) {
+            setInputValue(setStr.split(`"`)[1])
+        } else {
+            setInputValue(setStr);
+        }
     };
 
     return (

@@ -10,9 +10,8 @@ const ModalCustomBody = ({step}:{step:number}) => {
     {
         case 0: return <GeneralDetails />;
         case 1: return <TriggerFirstModal />;
-        case 2: return <TriggerSecondModal />;
-        case 3: return <MetadataEdit />
-        case 4: return <Ticket />;
+        case 2: return <MetadataEdit />
+        case 3: return <Ticket />;
     }
 }
 

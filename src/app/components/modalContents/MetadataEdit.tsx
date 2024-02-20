@@ -77,9 +77,6 @@ const MetadataEdit = () => {
         }
     };
 
-    useEffect(() => {
-        console.log(metadatas);
-    }, [metadatas]);
     return (
         <>
             <Box m={[5, 2]}>
