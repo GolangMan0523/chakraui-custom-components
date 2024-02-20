@@ -9,8 +9,6 @@ import {
     TagLabel,
     TagCloseButton,
     Tag,
-    Textarea,
-    useSteps,
     ChakraProvider,
     TableContainer,
     Tr,
@@ -21,7 +19,8 @@ import {
     Tbody,
     Td,
     Select,
-    Stack
+    Stack,
+    Textarea
 } from "@chakra-ui/react";
 import MetadataInput from "./EventMetadataSelector";
 import { useEffect, useState } from "react";
@@ -50,7 +49,7 @@ const MetadataEdit = () => {
     const metadataTypes = ["Event", "User", "Super"];
 
     const [isAdding, setIsAdding] = useState<boolean>(false);
-
+    const [disable, setDisable] = useState<boolean>(true);
     const [metadatas, setMetadatas] = useState<Meta[]>([{
         name: "Sensor_added",
         description: "Lorem Ipsum",
@@ -106,20 +105,22 @@ const MetadataEdit = () => {
                                             borderBottomColor="grey.100"
                                         >
                                             <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
-                                                <MetadataInput />
+                                                <MetadataInput setDisable={setDisable} />
                                             </Td>
                                             <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
-                                                <Input
+                                                <Textarea
                                                     value={metaRow.description}
                                                     variant={"unstyled"}
-                                                    disabled
-                                                ></Input>
+                                                    borderColor={'darkgray'}
+                                                    disabled={disable}
+                                                ></Textarea>
                                             </Td>
                                             <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
                                                     value={metadataTypes[metaRow.metaType]}
-                                                    disabled
+                                                    borderColor={'darkgray'}
+                                                    disabled={disable}
                                                 >
                                                     <option value="option1">Event</option>
                                                     <option value="option2">User</option>
@@ -130,7 +131,8 @@ const MetadataEdit = () => {
                                                 <Select
                                                     placeholder="unselected"
                                                     value={metadataTypes[metaRow.metaType]}
-                                                    disabled
+                                                    borderColor={'darkgray'}
+                                                    disabled={disable}
                                                 >
                                                     <option value="option1">Number</option>
                                                     <option value="option2">String</option>
@@ -141,7 +143,8 @@ const MetadataEdit = () => {
                                                 <Stack direction="row" justify={"flex-start"} spacing={"6"}>
                                                     <Input
                                                         placeholder="Add example value"
-                                                        disabled
+                                                        disabled={disable}
+                                                        borderColor={'darkgray'}
                                                     />
                                                     <Button
                                                         size="md"

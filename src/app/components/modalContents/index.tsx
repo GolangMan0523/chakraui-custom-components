@@ -1,7 +1,6 @@
 import GeneralDetails from "./GeneralDetails"
 import Ticket from "./Ticket";
 import TriggerFirstModal from "./TriggerFirstModal";
-import TriggerSecondModal from "./TriggerSecondModal";
 import MetadataEdit from "./MetadataEdit";
 
 const ModalCustomBody = ({step}:{step:number}) => {

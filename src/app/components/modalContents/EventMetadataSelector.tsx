@@ -11,7 +11,11 @@ import {
     useColorModeValue,
 } from "@chakra-ui/react";
 
-const MetadataInput: React.FC = () => {
+type Props ={
+    setDisable: (disable: boolean) => void;
+}
+
+const MetadataInput = ({setDisable}: Props) => {
     const borderColor = useColorModeValue("gray.300", "gray.600");
     const popoverContentBg = useColorModeValue("#1a202c", "gray.800");
 
@@ -28,6 +32,8 @@ const MetadataInput: React.FC = () => {
         }
         else setPreviewList(preList);
         setInputValue(event.target.value);
+        if (event.target.value.length) setDisable(false) 
+        else setDisable(true)
     };
 
     const handleCreateClick = () => {
@@ -35,9 +41,9 @@ const MetadataInput: React.FC = () => {
     };
 
     useEffect(() => {
-        if(previewList.length) setOpen(true);
+        if (previewList.length && inputValue.length) setOpen(true);
         else setOpen(false)
-    }, [previewList]);
+    }, [previewList, inputValue]);
 
     const handleSet = (setStr: string): void => {
         setPreviewList([]);
@@ -64,7 +70,7 @@ const MetadataInput: React.FC = () => {
                     <VStack p={4}>
                         {previewList &&
                             previewList.map((item, index) => (
-                                <Text key={index} onClick={() => handleSet(item)}>
+                                <Text key={index} onClick={() => handleSet(item)} w='100%' textAlign={'center'}>
                                     {item}
                                 </Text>
                             ))}

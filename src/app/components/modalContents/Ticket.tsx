@@ -33,19 +33,6 @@ const Ticket = () => {
                         align="left"
                         justify={"center"}
                     >
-                        <Text fontSize="2xl"><Text as='b'>Task</Text>: Enhance <Text as='b' fontSize="xl">`setEventMetadataForPageX`</Text> for Sensor Addition Tracking</Text>
-                        <Text fontSize="2xl" as='b'>Details:</Text>
-
-                        <UnorderedList>
-                            <ListItem>
-                                <Text fontSize="2xl"><Text as='b'>Generate Function:</Text> Execute <Text as='b' fontSize="xl">`npm run generate:analytics --session=&ldquo;abc&rdquo;`</Text> to generate the helper function named <Text as='b' fontSize="xl">`setEventMetadataForPageX`.</Text> </Text>
-                            </ListItem>
-                            <ListItem>
-                                <Text fontSize="2xl"><Text as='b'>Integration:</Text> Add a <Text as='b' fontSize="xl">`sensor_added`</Text> boolean parameter to the <Text as='b' fontSize="xl">`setEventMetadataForPageX`</Text> function to track sensor additions by users. Set to <Text as='b' fontSize="xl">`true`</Text> when a sensor is added, and <Text as='b' fontSize="xl">`false`</Text> otherwise. Ensure accuracy in logging this data.</Text>
-                            </ListItem>
-                        </UnorderedList>
-
-                        <br />
 
                         <Text fontSize="2xl">Ticket Detail</Text>
                         <Textarea
@@ -53,6 +40,14 @@ const Ticket = () => {
                             placeholder="Name"
                             width={"100%"}
                         >
+                            Task: Enhance `setEventMetadataForPageX` for Sensor Addition Tracking
+                            
+                            Details:
+
+                            
+                                   Generate Function: Execute  `npm run generate:analytics --session=&ldquo;abc&rdquo;`to generate the helper function named `setEventMetadataForPageX`.
+                                
+                                   Integration: Add a  `sensor_added` boolean parameter to the  `setEventMetadataForPageX`  function to track sensor additions by users. Set to  `true` when a sensor is added, and `false` otherwise. Ensure accuracy in logging this data.
                         </Textarea>
                     </Stack>
                     <Stack
