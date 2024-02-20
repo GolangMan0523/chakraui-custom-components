@@ -105,3 +105,11 @@ a {
     color-scheme: dark;
   }
 }
+
+.chakra-select >option {
+  background: black !important;
+}
+
+textarea input select .chakra-select .chakra-textarea .chakra-input {
+  border-color: darkblue !important;
+}
