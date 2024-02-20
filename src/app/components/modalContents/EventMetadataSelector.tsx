@@ -77,7 +77,8 @@ const MetadataInput = ({setDisable}: Props) => {
                         value={inputValue}
                         onChange={handleInputChange}
                         borderColor={borderColor}
-                    />
+                        minW={'15vw'}
+                        />
                 </PopoverTrigger>
                 <PopoverContent  borderColor={borderColor} bg={popoverContentBg} zIndex={10002} >
                     <VStack >

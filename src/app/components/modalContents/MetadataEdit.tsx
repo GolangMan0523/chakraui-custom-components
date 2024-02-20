@@ -107,7 +107,7 @@ const MetadataEdit = () => {
                 <VStack>
                     <ChakraProvider theme={customTheme}>
                         <TableContainer marginTop={100} border="1px" borderColor="grey.100">
-                            <Table size="lg" variant={"unstyled"} colorScheme="gray">
+                            <Table size="lg" variant={"unstyled"} colorScheme="gray" >
                                 <Thead border="1px" borderColor="grey.100">
                                     <Tr>
                                         <Th borderRight={"1px"} borderRightColor={"grey.100"} >
@@ -129,39 +129,42 @@ const MetadataEdit = () => {
                                             borderBottom="1px"
                                             borderBottomColor="grey.100"
                                         >
-                                            <Td w={'10%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <MetadataInput setDisable={setDisable} />
                                             </Td>
-                                            <Td w={'10%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Textarea
                                                     variant={"unstyled"}
                                                     borderColor={'darkgray'}
                                                     disabled={disable || index < metadatas.length - 1}
-                                                ></Textarea>
+                                                    minW={'15vw'}
+                                                    ></Textarea>
                                             </Td>
-                                            <Td w={'10%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
                                                     borderColor={'darkgray'}
                                                     disabled={disable || index < metadatas.length - 1}
+                                                    minW={'15vw'}
                                                 >
                                                     <option value="option1">Event</option>
                                                     <option value="option2">User</option>
                                                     <option value="option3">Super</option>
                                                 </Select>
                                             </Td>
-                                            <Td w={'10%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
                                                     borderColor={'darkgray'}
                                                     disabled={disable || index < metadatas.length - 1}
+                                                    minW={'15vw'}
                                                 >
                                                     <option value="option1">Number</option>
                                                     <option value="option2">String</option>
                                                     <option value="option3">List</option>
                                                 </Select>
                                             </Td>
-                                            <Td w={'60%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Box>
                                                     <Stack direction="row" justify={"flex-start"} spacing={"6"}>
                                                         <Input
