@@ -86,11 +86,11 @@ const MetadataEdit = () => {
     }
 
     const handleAddTag = (id: number) => {
-        console.log(id)
-        const metadata = metadatas.find(data => data.id === id) as Meta
-        metadata.example.push(tag)
-
-        setMetadatas(metadatas.filter((item: Meta) => item.id >= 0));
+        if (tag.length) {
+            const metadata = metadatas.find(data => data.id === id) as Meta
+            metadata.example.push(tag)
+            setMetadatas(metadatas.filter((item: Meta) => item.id >= 0));
+        }
     }
 
     return (
