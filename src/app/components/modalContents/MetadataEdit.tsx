@@ -126,7 +126,6 @@ const MetadataEdit = () => {
                                             </Td>
                                             <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Textarea
-                                                    value={metaRow.description}
                                                     variant={"unstyled"}
                                                     borderColor={'darkgray'}
                                                     disabled={disable || index < metadatas.length - 1}
@@ -135,7 +134,6 @@ const MetadataEdit = () => {
                                             <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
-                                                    value={metadataTypes[metaRow.metaType]}
                                                     borderColor={'darkgray'}
                                                     disabled={disable || index < metadatas.length - 1}
                                                 >
@@ -147,7 +145,6 @@ const MetadataEdit = () => {
                                             <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
-                                                    value={metadataTypes[metaRow.metaType]}
                                                     borderColor={'darkgray'}
                                                     disabled={disable || index < metadatas.length - 1}
                                                 >
