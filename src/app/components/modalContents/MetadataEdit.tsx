@@ -168,6 +168,7 @@ const MetadataEdit = () => {
                                                         size="md"
                                                         w="10%"
                                                         colorScheme="orange"
+                                                        disabled={disable || index < metadatas.length - 1}
                                                         onClick={() => handleAddTag(metaRow.id)}
                                                     >
                                                         <AddIcon />
