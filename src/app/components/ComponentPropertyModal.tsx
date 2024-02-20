@@ -14,7 +14,7 @@ const ComponentPropertyModal = () => {
 
   return (
     <>
-      <Modal isOpen={isOpen} onClose={onClose}  size="full">
+      <Modal isOpen={isOpen} onClose={onClose}  size="full" id='modal'>
         <ModalOverlay />
         <AddEventModal onClose={onClose} />
       </Modal>

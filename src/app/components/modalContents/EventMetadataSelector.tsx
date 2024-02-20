@@ -32,8 +32,8 @@ const MetadataInput = ({setDisable}: Props) => {
         }
         else setPreviewList(preList);
         setInputValue(event.target.value);
-        if (event.target.value.length) setDisable(false) 
-        else setDisable(true)
+
+        
     };
 
     const handleCreateClick = () => {
@@ -45,6 +45,19 @@ const MetadataInput = ({setDisable}: Props) => {
         else setOpen(false)
     }, [previewList, inputValue]);
 
+    useEffect(() => {
+        const modal = document.getElementById("chakra-modal-modal") as HTMLElement
+        modal.addEventListener('click', handleDropdown)
+        // Clean up event listeners
+      return () => {
+        modal.removeEventListener('click', handleDropdown);
+      };
+    }, [])
+
+    const handleDropdown = () => {
+        setOpen(false)
+    }
+
     const handleSet = (setStr: string): void => {
         setPreviewList([]);
         if (setStr.includes(`"`)) {
@@ -52,11 +65,12 @@ const MetadataInput = ({setDisable}: Props) => {
         } else {
             setInputValue(setStr);
         }
+        setDisable(false)
     };
 
     return (
         <VStack spacing={4} align="stretch">
-            <Popover placement="bottom-start" isOpen={open} computePositionOnMount autoFocus>
+            <Popover placement="bottom-start" isOpen={open} computePositionOnMount autoFocus={false}>
                 <PopoverTrigger>
                     <Input
                         placeholder="Type to add a new metadata"
@@ -65,12 +79,11 @@ const MetadataInput = ({setDisable}: Props) => {
                         borderColor={borderColor}
                     />
                 </PopoverTrigger>
-                <PopoverContent borderColor={borderColor} bg={popoverContentBg} zIndex={10002}>
-                    <PopoverArrow />
-                    <VStack p={4}>
+                <PopoverContent  borderColor={borderColor} bg={popoverContentBg} zIndex={10002} >
+                    <VStack >
                         {previewList &&
                             previewList.map((item, index) => (
-                                <Text key={index} onClick={() => handleSet(item)} w='100%' textAlign={'center'}>
+                                <Text key={index} onClick={() => handleSet(item)} w='100%' textAlign={'center'} m={4}>
                                     {item}
                                 </Text>
                             ))}

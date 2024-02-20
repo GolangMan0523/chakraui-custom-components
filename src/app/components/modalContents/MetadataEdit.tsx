@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 const MetadataEdit = () => {
 
     type Meta = {
+        id: number,
         name: string;
         description: string;
         metaType: number;
@@ -51,6 +52,7 @@ const MetadataEdit = () => {
     const [isAdding, setIsAdding] = useState<boolean>(false);
     const [disable, setDisable] = useState<boolean>(true);
     const [metadatas, setMetadatas] = useState<Meta[]>([{
+        id: 1,
         name: "Sensor_added",
         description: "Lorem Ipsum",
         metaType: 2,
@@ -65,6 +67,7 @@ const MetadataEdit = () => {
             setMetadatas((prev) => [
                 ...prev,
                 {
+                    id: prev[prev.length - 1].id + 1,
                     name: "a",
                     description: "c",
                     metaType: 1,
@@ -73,8 +76,22 @@ const MetadataEdit = () => {
                 },
             ]);
             setIsAdding(true);
+            setDisable(true)
         }
     };
+
+    const [tag, setTag] = useState<string>("")
+    const handleChangeAddTag = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTag(e.target.value)
+    }
+
+    const handleAddTag = (id: number) => {
+        console.log(id)
+        const metadata = metadatas.find(data => data.id === id) as Meta
+        metadata.example.push(tag)
+
+        setMetadatas(metadatas.filter((item: Meta) => item.id >= 0));
+    }
 
     return (
         <>
@@ -112,7 +129,7 @@ const MetadataEdit = () => {
                                                     value={metaRow.description}
                                                     variant={"unstyled"}
                                                     borderColor={'darkgray'}
-                                                    disabled={disable}
+                                                    disabled={disable || index < metadatas.length - 1}
                                                 ></Textarea>
                                             </Td>
                                             <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
@@ -120,7 +137,7 @@ const MetadataEdit = () => {
                                                     placeholder="unselected"
                                                     value={metadataTypes[metaRow.metaType]}
                                                     borderColor={'darkgray'}
-                                                    disabled={disable}
+                                                    disabled={disable || index < metadatas.length - 1}
                                                 >
                                                     <option value="option1">Event</option>
                                                     <option value="option2">User</option>
@@ -132,7 +149,7 @@ const MetadataEdit = () => {
                                                     placeholder="unselected"
                                                     value={metadataTypes[metaRow.metaType]}
                                                     borderColor={'darkgray'}
-                                                    disabled={disable}
+                                                    disabled={disable || index < metadatas.length - 1}
                                                 >
                                                     <option value="option1">Number</option>
                                                     <option value="option2">String</option>
@@ -143,13 +160,15 @@ const MetadataEdit = () => {
                                                 <Stack direction="row" justify={"flex-start"} spacing={"6"}>
                                                     <Input
                                                         placeholder="Add example value"
-                                                        disabled={disable}
+                                                        disabled={disable || index < metadatas.length - 1}
                                                         borderColor={'darkgray'}
+                                                        onChange={handleChangeAddTag}
                                                     />
                                                     <Button
                                                         size="md"
                                                         w="10%"
                                                         colorScheme="orange"
+                                                        onClick={() => handleAddTag(metaRow.id)}
                                                     >
                                                         <AddIcon />
                                                     </Button>

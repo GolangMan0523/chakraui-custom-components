@@ -41,6 +41,8 @@ const useGlobalHover = (onOpen: () => void, componentPropertyOpened: boolean) =>
       document.body.appendChild(floatingIndicator);
 
       const parentOfMenu = document.getElementById("menu-event") as HTMLElement; // get the button element by id
+
+
       const menu = document.getElementById("menu") as HTMLElement; // get the menu element by id
       const viewEventsButton = document.getElementById("view-events") as HTMLElement; // get the menu element by id
       const viewPropertiesButton = document.getElementById("view-properties") as HTMLElement; // get the menu element by id
@@ -60,14 +62,14 @@ const useGlobalHover = (onOpen: () => void, componentPropertyOpened: boolean) =>
 
       const removeMenu = (e: MouseEvent) => {
         if (isHighlightEnabled) {
-          e.stopImmediatePropagation()
           const target = e.target as HTMLElement;
-          console.log("target =>", target.parentNode)
           if (target.id !== "menu") {
             menu.style.display = "none";
           }
         }
       }
+
+
 
       const toggleHighlight = (event: KeyboardEvent) => {
         console.log(event);
