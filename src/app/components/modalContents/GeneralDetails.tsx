@@ -34,6 +34,11 @@ const GeneralDetails = () => {
         }
     };
 
+    const handleDeleteTag = (tagName: string) => {
+        const newKPIs = KPIs.filter(kpi => kpi !== tagName)
+        setKPIs(newKPIs)
+    }
+
     return (
         <Box mt={10} display="flex" justifyContent="center">
             <VStack spacing={4} align="stretch" w={"80%"}>
@@ -129,7 +134,7 @@ const GeneralDetails = () => {
                                 colorScheme="green"
                             >
                                 <TagLabel>{tagName}</TagLabel>
-                                <TagCloseButton />
+                                <TagCloseButton onClick={() => handleDeleteTag(tagName)} />
                             </Tag>
                         ))}
                     </HStack>

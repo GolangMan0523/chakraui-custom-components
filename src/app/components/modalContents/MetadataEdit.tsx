@@ -91,6 +91,14 @@ const MetadataEdit = () => {
             metadata.example.push(tag)
             setMetadatas(metadatas.filter((item: Meta) => item.id >= 0));
         }
+        setTag("");
+    }
+
+    const handleDeleteTag = (tagName: string, id: number) => {
+        const metadata = metadatas.find(data => data.id === id) as Meta
+        const example = metadata.example.filter(tag => tag !== tagName)
+        metadata.example = example
+        setMetadatas(metadatas.filter((item: Meta) => item.id >= 0));
     }
 
     return (
@@ -102,7 +110,7 @@ const MetadataEdit = () => {
                             <Table size="lg" variant={"unstyled"} colorScheme="gray">
                                 <Thead border="1px" borderColor="grey.100">
                                     <Tr>
-                                        <Th borderRight={"1px"} borderRightColor={"grey.100"}>
+                                        <Th borderRight={"1px"} borderRightColor={"grey.100"} >
                                             Medata name
                                         </Th>
                                         <Th borderRight={"1px"} borderRightColor={"grey.100"}>
@@ -121,17 +129,17 @@ const MetadataEdit = () => {
                                             borderBottom="1px"
                                             borderBottomColor="grey.100"
                                         >
-                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td w={'10%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <MetadataInput setDisable={setDisable} />
                                             </Td>
-                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td w={'10%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Textarea
                                                     variant={"unstyled"}
                                                     borderColor={'darkgray'}
                                                     disabled={disable || index < metadatas.length - 1}
                                                 ></Textarea>
                                             </Td>
-                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td w={'10%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
                                                     borderColor={'darkgray'}
@@ -142,7 +150,7 @@ const MetadataEdit = () => {
                                                     <option value="option3">Super</option>
                                                 </Select>
                                             </Td>
-                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td w={'10%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
                                                     borderColor={'darkgray'}
@@ -153,39 +161,43 @@ const MetadataEdit = () => {
                                                     <option value="option3">List</option>
                                                 </Select>
                                             </Td>
-                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
-                                                <Stack direction="row" justify={"flex-start"} spacing={"6"}>
-                                                    <Input
-                                                        placeholder="Add example value"
-                                                        disabled={disable || index < metadatas.length - 1}
-                                                        borderColor={'darkgray'}
-                                                        onChange={handleChangeAddTag}
-                                                    />
-                                                    <Button
-                                                        size="md"
-                                                        w="10%"
-                                                        colorScheme="orange"
-                                                        disabled={disable || index < metadatas.length - 1}
-                                                        onClick={() => handleAddTag(metaRow.id)}
-                                                    >
-                                                        <AddIcon />
-                                                    </Button>
-                                                </Stack>
-
-                                                <HStack spacing={4} mt={5}>
-                                                    {metaRow.example.map((tagName, index) => (
-                                                        <Tag
-                                                            size={"lg"}
-                                                            key={index}
-                                                            borderRadius="full"
-                                                            variant="solid"
-                                                            colorScheme="green"
+                                            <Td w={'60%'} borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                                <Box>
+                                                    <Stack direction="row" justify={"flex-start"} spacing={"6"}>
+                                                        <Input
+                                                            placeholder="Add example value"
+                                                            disabled={disable || index < metadatas.length - 1}
+                                                            borderColor={'darkgray'}
+                                                            onChange={handleChangeAddTag}
+                                                            value={tag}
+                                                        />
+                                                        <Button
+                                                            size="md"
+                                                            w="10%"
+                                                            colorScheme="orange"
+                                                            disabled={disable || index < metadatas.length - 1}
+                                                            onClick={() => handleAddTag(metaRow.id)}
                                                         >
-                                                            <TagLabel>{tagName}</TagLabel>
-                                                            <TagCloseButton />
-                                                        </Tag>
-                                                    ))}
-                                                </HStack>
+                                                            <AddIcon />
+                                                        </Button>
+                                                    </Stack>
+
+                                                    <HStack spacing={4} mt={5} flexWrap={'wrap'}>
+                                                        {metaRow.example.map((tagName, i) => (
+                                                            <Tag
+                                                                size={"lg"}
+                                                                key={i}
+                                                                borderRadius="full"
+                                                                variant="solid"
+                                                                colorScheme="green"
+                                                            >
+                                                                <TagLabel>{tagName}</TagLabel>
+                                                                <TagCloseButton onClick={() => handleDeleteTag(tagName, metaRow.id)} />
+                                                            </Tag>
+                                                        ))}
+                                                    </HStack>
+                                                </Box>
+
                                             </Td>
                                         </Tr>
                                     ))}
