@@ -39,7 +39,7 @@ type Props = {
   onClose: () => void;
 }
 
-const AddEventModal: React.FC<Props> = ({ onClose }: Props) => {
+const EventTable: React.FC<Props> = ({ onClose }: Props) => {
   const [eventOpen, setEventOpen] = useState(false);
 
   const handleClickEvent = () => {
@@ -200,4 +200,4 @@ const AddEventModal: React.FC<Props> = ({ onClose }: Props) => {
   );
 };
 
-export default AddEventModal;
+export default EventTable;

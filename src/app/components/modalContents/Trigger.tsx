@@ -14,7 +14,7 @@ import {
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
-const TriggerFirstModal: React.FC = () => {
+const Trigger: React.FC = () => {
     const [isAddConditional, setIsAddConditional] = useState<boolean>(false);
     const tracks = [
         { title: 1 },
@@ -87,4 +87,4 @@ const TriggerFirstModal: React.FC = () => {
     );
 };
 
-export default TriggerFirstModal;
+export default Trigger;

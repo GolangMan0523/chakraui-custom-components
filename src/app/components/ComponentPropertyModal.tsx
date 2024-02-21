@@ -5,7 +5,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from '@chakra-ui/react';
-import AddEventModal from './AddEventModal';
+import EventTable from './EventTable';
 
 const ComponentPropertyModal = () => {
   const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: false });
@@ -16,7 +16,7 @@ const ComponentPropertyModal = () => {
     <>
       <Modal isOpen={isOpen} onClose={onClose}  size="full" id='modal'>
         <ModalOverlay />
-        <AddEventModal onClose={onClose} />
+        <EventTable onClose={onClose} />
       </Modal>
     </>
   );
