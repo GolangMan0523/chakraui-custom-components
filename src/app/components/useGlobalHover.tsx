@@ -72,7 +72,6 @@ const useGlobalHover = (onOpen: () => void, componentPropertyOpened: boolean) =>
 
 
       const toggleHighlight = (event: KeyboardEvent) => {
-        console.log(event);
         // Use Ctrl + Shift + X to toggle the highlight
         if (event.shiftKey && event.code === 'KeyX') {
           setIsHighlightEnabled(prev => !prev);

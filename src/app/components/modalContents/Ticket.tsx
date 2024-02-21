@@ -7,8 +7,6 @@ import {
     Tag,
     Text,
     Textarea,
-    UnorderedList,
-    ListItem
 } from "@chakra-ui/react";
 
 import { useState } from "react";
@@ -39,15 +37,9 @@ const Ticket = () => {
                             rows={15}
                             placeholder="Name"
                             width={"100%"}
+                            defaultValue={'Task: Enhance `setEventMetadataForPageX` for Sensor Addition Tracking       Details:     Generate Function: Execute  `npm run generate:analytics --session=&ldquo;abc&rdquo;`to generate the helper function named `setEventMetadataForPageX`.   Integration: Add a  `sensor_added` boolean parameter to the  `setEventMetadataForPageX`  function to track sensor additions by users. Set to  `true` when a sensor is added, and `false` otherwise. Ensure accuracy in logging this data.'}
                         >
-                            Task: Enhance `setEventMetadataForPageX` for Sensor Addition Tracking
                             
-                            Details:
-
-                            
-                                   Generate Function: Execute  `npm run generate:analytics --session=&ldquo;abc&rdquo;`to generate the helper function named `setEventMetadataForPageX`.
-                                
-                                   Integration: Add a  `sensor_added` boolean parameter to the  `setEventMetadataForPageX`  function to track sensor additions by users. Set to  `true` when a sensor is added, and `false` otherwise. Ensure accuracy in logging this data.
                         </Textarea>
                     </Stack>
                     <Stack

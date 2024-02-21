@@ -23,7 +23,7 @@ import {
     Textarea
 } from "@chakra-ui/react";
 import MetadataInput from "./EventMetadataSelector";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const MetadataEdit = () => {
 
@@ -47,8 +47,6 @@ const MetadataEdit = () => {
         },
     });
 
-    const metadataTypes = ["Event", "User", "Super"];
-
     const [isAdding, setIsAdding] = useState<boolean>(false);
     const [disable, setDisable] = useState<boolean>(true);
     const [metadatas, setMetadatas] = useState<Meta[]>([{
@@ -68,8 +66,8 @@ const MetadataEdit = () => {
                 ...prev,
                 {
                     id: prev[prev.length - 1].id + 1,
-                    name: "a",
-                    description: "c",
+                    name: "",
+                    description: "",
                     metaType: 1,
                     _type: "",
                     example: [],
@@ -129,18 +127,18 @@ const MetadataEdit = () => {
                                             borderBottom="1px"
                                             borderBottomColor="grey.100"
                                         >
-                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <MetadataInput setDisable={setDisable} />
                                             </Td>
-                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Textarea
                                                     variant={"unstyled"}
                                                     borderColor={'darkgray'}
                                                     disabled={disable || index < metadatas.length - 1}
                                                     minW={'15vw'}
-                                                    ></Textarea>
+                                                ></Textarea>
                                             </Td>
-                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
                                                     borderColor={'darkgray'}
@@ -152,7 +150,7 @@ const MetadataEdit = () => {
                                                     <option value="option3">Super</option>
                                                 </Select>
                                             </Td>
-                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Select
                                                     placeholder="unselected"
                                                     borderColor={'darkgray'}
@@ -164,7 +162,7 @@ const MetadataEdit = () => {
                                                     <option value="option3">List</option>
                                                 </Select>
                                             </Td>
-                                            <Td  borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
+                                            <Td borderRight={"1px"} borderRightColor={"grey.100"} verticalAlign={'top'}>
                                                 <Box>
                                                     <Stack direction="row" justify={"flex-start"} spacing={"6"}>
                                                         <Input

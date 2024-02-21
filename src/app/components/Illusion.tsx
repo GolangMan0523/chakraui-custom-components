@@ -1,9 +1,5 @@
 "use client";
-import { AddIcon } from "@chakra-ui/icons";
-import { Set } from "es6-shim";
 import {
-    Modal,
-    ModalContent,
     ModalHeader,
     ModalCloseButton,
     ModalBody,
@@ -22,10 +18,9 @@ import {
     StepStatus,
     StepSeparator,
     useDisclosure,
-    ModalOverlay
 } from "@chakra-ui/react";
 
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import ModalCustomBody from "./modalContents";
 
 const Illusion: React.FC = () => {

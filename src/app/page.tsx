@@ -1,5 +1,5 @@
 import styles from "./page.module.css";
-import { Box, Text, Card, CardHeader, Heading, CardBody, Stack, Button, useDisclosure } from "@chakra-ui/react"
+import { Box, Text, Card, CardHeader, Heading, CardBody, Stack, Button } from "@chakra-ui/react"
 import ComponentPropertyModal from "./components/ComponentPropertyModal";
 
 export default function Home() {

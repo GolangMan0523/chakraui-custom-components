@@ -7,15 +7,14 @@ import {
     Text,
     PopoverTrigger,
     PopoverContent,
-    PopoverArrow,
     useColorModeValue,
 } from "@chakra-ui/react";
 
-type Props ={
+type Props = {
     setDisable: (disable: boolean) => void;
 }
 
-const MetadataInput = ({setDisable}: Props) => {
+const MetadataInput = ({ setDisable }: Props) => {
     const borderColor = useColorModeValue("gray.300", "gray.600");
     const popoverContentBg = useColorModeValue("#1a202c", "gray.800");
 
@@ -24,7 +23,7 @@ const MetadataInput = ({setDisable}: Props) => {
     const [previewList, setPreviewList] = useState<string[]>([]);
 
     const wordlist = ["abcd", "efgh", "hijk", "lmno"];
-    
+
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const preList = wordlist.filter((word) => word.includes(event.target.value));
         if (preList.length === 0 && event.target.value.length) {
@@ -33,7 +32,7 @@ const MetadataInput = ({setDisable}: Props) => {
         else setPreviewList(preList);
         setInputValue(event.target.value);
 
-        
+
     };
 
     const handleCreateClick = () => {
@@ -49,9 +48,9 @@ const MetadataInput = ({setDisable}: Props) => {
         const modal = document.getElementById("chakra-modal-modal") as HTMLElement
         modal.addEventListener('click', handleDropdown)
         // Clean up event listeners
-      return () => {
-        modal.removeEventListener('click', handleDropdown);
-      };
+        return () => {
+            modal.removeEventListener('click', handleDropdown);
+        };
     }, [])
 
     const handleDropdown = () => {
@@ -78,9 +77,9 @@ const MetadataInput = ({setDisable}: Props) => {
                         onChange={handleInputChange}
                         borderColor={borderColor}
                         minW={'15vw'}
-                        />
+                    />
                 </PopoverTrigger>
-                <PopoverContent  borderColor={borderColor} bg={popoverContentBg} zIndex={10002} >
+                <PopoverContent borderColor={borderColor} bg={popoverContentBg} zIndex={10002} >
                     <VStack >
                         {previewList &&
                             previewList.map((item, index) => (

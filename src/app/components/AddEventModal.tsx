@@ -1,15 +1,12 @@
 "use client";
-import useGlobalHover from "./useGlobalHover";
 import { AddIcon } from "@chakra-ui/icons";
 import {
-  Modal,
   ModalContent,
   ModalCloseButton,
   ModalBody,
   ModalFooter,
   Button,
   VStack,
-  useDisclosure,
   Table,
   Thead,
   Tbody,
@@ -47,7 +44,6 @@ const AddEventModal: React.FC<Props> = ({ onClose }: Props) => {
 
   const handleClickEvent = () => {
     setEventOpen(true);
-    console.log(eventOpen);
   };
 
   const events = [
@@ -187,7 +183,6 @@ const AddEventModal: React.FC<Props> = ({ onClose }: Props) => {
               variant="outline"
               marginTop={10}
               rightIcon={<AddIcon />}
-              onClick={onClose}
             >
               Add event
             </Button>
