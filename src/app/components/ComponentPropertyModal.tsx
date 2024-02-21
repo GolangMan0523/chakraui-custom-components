@@ -1,5 +1,5 @@
 "use client"
-import useGlobalHover from './useGlobalHover';
+import useGlobalHover from '../hooks/useGlobalHover';
 import {
   Modal,
   ModalOverlay,
