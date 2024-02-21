@@ -170,7 +170,7 @@ const MetadataEdit = () => {
                                                             disabled={disable || index < metadatas.length - 1}
                                                             borderColor={'darkgray'}
                                                             onChange={handleChangeAddTag}
-                                                            value={tag}
+                                                            value={index < metadatas.length - 1 ? "": tag}
                                                         />
                                                         <Button
                                                             size="md"
