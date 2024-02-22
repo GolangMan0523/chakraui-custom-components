@@ -147,7 +147,7 @@ const useGlobalHover = (onOpen: () => void, componentPropertyOpened: boolean, se
       };
     }
 
-  }, [isHighlightEnabled, onOpen, componentPropertyOpened]); // Empty dependency array ensures this effect runs once on mount
+  }, [isHighlightEnabled, onOpen, componentPropertyOpened, setMenuItem]); // Empty dependency array ensures this effect runs once on mount
 };
 
 export default useGlobalHover;

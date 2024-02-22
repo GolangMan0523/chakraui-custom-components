@@ -28,7 +28,7 @@ function VariantPercentageInput() {
           <NumberInput defaultValue={12} min={0} max={100} clampValueOnBlur={false} >
             <NumberInputField paddingRight="2rem" />
           </NumberInput>
-          <InputRightAddon background="transparent" children="%" border="none" />
+          <InputRightAddon background="transparent" border="none" />
         </InputGroup>
         <Checkbox >Default</Checkbox>
       </HStack>
