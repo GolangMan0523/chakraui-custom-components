@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { useEffect, useState, SetStateAction, Dispatch } from 'react';
 
 
 const css = `
@@ -17,7 +17,7 @@ const css = `
 }
 `;
 
-const useGlobalHover = (onOpen: () => void, componentPropertyOpened: boolean) => {
+const useGlobalHover = (onOpen: () => void, componentPropertyOpened: boolean, setMenuItem: Dispatch<SetStateAction<number>>) => {
 
   const [isHighlightEnabled, setIsHighlightEnabled] = useState(true);
 
@@ -119,15 +119,20 @@ const useGlobalHover = (onOpen: () => void, componentPropertyOpened: boolean) =>
         }
       };
 
+      const handleOpenModal = (menuItem: number) => {
+        onOpen()
+        setMenuItem(menuItem)
+      }
+
       document.addEventListener('click', removeMenu);
       document.addEventListener('keydown', toggleHighlight);
       // Attach event listeners to the document
       parentOfMenu.addEventListener('contextmenu', handleRightClick);
       parentOfMenu.addEventListener('mouseover', addHighlight);
       parentOfMenu.addEventListener('mouseout', removeHighlight);
-      viewEventsButton.addEventListener('click', onOpen);
-      viewPropertiesButton.addEventListener('click', onOpen);
-      viewRevisionsButton.addEventListener('click', onOpen);
+      viewEventsButton.addEventListener('click', () => handleOpenModal(1));
+      viewPropertiesButton.addEventListener('click', () => handleOpenModal(2));
+      viewRevisionsButton.addEventListener('click', () => handleOpenModal(3));
 
       // Clean up event listeners
       return () => {
@@ -136,9 +141,9 @@ const useGlobalHover = (onOpen: () => void, componentPropertyOpened: boolean) =>
         parentOfMenu.removeEventListener('mouseover', addHighlight);
         parentOfMenu.removeEventListener('mouseout', removeHighlight);
         parentOfMenu.removeEventListener('contextmenu', handleRightClick);
-        viewEventsButton.removeEventListener('click', onOpen);
-        viewEventsButton.removeEventListener('click', onOpen);
-        viewEventsButton.removeEventListener('click', onOpen);
+        viewEventsButton.removeEventListener('click', () => handleOpenModal(1));
+        viewEventsButton.removeEventListener('click', () => handleOpenModal(2));
+        viewEventsButton.removeEventListener('click', () => handleOpenModal(3));
       };
     }
 

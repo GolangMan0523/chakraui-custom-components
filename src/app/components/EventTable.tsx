@@ -1,8 +1,6 @@
 "use client";
 import { AddIcon } from "@chakra-ui/icons";
 import {
-  ModalContent,
-  ModalCloseButton,
   ModalBody,
   ModalFooter,
   Button,
@@ -76,127 +74,120 @@ const EventTable: React.FC<Props> = ({ onClose }: Props) => {
   const status = ["In production", "Developing", "Swirched off"];
 
   return (
-    <ModalContent
-      zIndex={10001}
-      backgroundColor="gray.800"
-      color="white"
-      borderRadius={"2%"}
-      w="full"
-      id="componentPropertyEditor"
-    >
-      { !eventOpen ? 
+    <>
+      {!eventOpen ?
         <>
-        <ModalCloseButton margin={5} onClick={onClose} />
-        <ModalBody overflow={"visible"}>
-          <VStack>
-            <ChakraProvider theme={customTheme}>
-              <TableContainer
-                marginTop={100}
-                border="1px"
-                borderColor="grey.100"
-              >
-                <Table
-                  size="lg"
-                  variant={"unstyled"}
-                  colorScheme="gray"
+          <ModalBody overflow={"visible"}>
+            <VStack>
+              <ChakraProvider theme={customTheme}>
+                <TableContainer
+                  marginTop={100}
+                  border="1px"
+                  borderColor="grey.100"
                 >
-                  <Thead
-                    border="1px"
-                    borderColor="grey.100"
+                  <Table
+                    size="lg"
+                    variant={"unstyled"}
+                    colorScheme="gray"
                   >
-                    <Tr>
-                      <Th
-                        borderRight={"1px"}
-                        borderRightColor={
-                          "grey.100"
-                        }
-                      >
-                        Event name
-                      </Th>
-                      <Th
-                        borderRight={"1px"}
-                        borderRightColor={
-                          "grey.100"
-                        }
-                      >
-                        Created at
-                      </Th>
-                      <Th>Status</Th>
-                    </Tr>
-                  </Thead>
-                  <Tbody>
-                    {events.map((event) => (
-                      <Tr
-                        key={event.id}
-                        onClick={handleClickEvent}
-                        cursor="pointer"
-                        borderBottom="1px"
-                        borderBottomColor="grey.100"
-                      >
-                        <Td
+                    <Thead
+                      border="1px"
+                      borderColor="grey.100"
+                    >
+                      <Tr>
+                        <Th
                           borderRight={"1px"}
                           borderRightColor={
                             "grey.100"
                           }
                         >
-                          {event.name}
-                        </Td>
-                        <Td
+                          Event name
+                        </Th>
+                        <Th
                           borderRight={"1px"}
                           borderRightColor={
                             "grey.100"
                           }
                         >
-                          {event.time}
-                        </Td>
-                        <Td>
-                          <HStack spacing={4}>
-                            <Tag
-                              size={"lg"}
-                              variant="outline"
-                              colorScheme={
-                                colors[
-                                event
-                                  .status
-                                ]
-                              }
-                            >
-                              <TagLabel>
-                                {
-                                  status[
+                          Created at
+                        </Th>
+                        <Th>Status</Th>
+                      </Tr>
+                    </Thead>
+                    <Tbody>
+                      {events.map((event) => (
+                        <Tr
+                          key={event.id}
+                          onClick={handleClickEvent}
+                          cursor="pointer"
+                          borderBottom="1px"
+                          borderBottomColor="grey.100"
+                        >
+                          <Td
+                            borderRight={"1px"}
+                            borderRightColor={
+                              "grey.100"
+                            }
+                          >
+                            {event.name}
+                          </Td>
+                          <Td
+                            borderRight={"1px"}
+                            borderRightColor={
+                              "grey.100"
+                            }
+                          >
+                            {event.time}
+                          </Td>
+                          <Td>
+                            <HStack spacing={4}>
+                              <Tag
+                                size={"lg"}
+                                variant="outline"
+                                colorScheme={
+                                  colors[
                                   event
                                     .status
                                   ]
                                 }
-                              </TagLabel>
-                            </Tag>
-                          </HStack>
-                        </Td>
-                      </Tr>
-                    ))}
-                  </Tbody>
-                </Table>
-              </TableContainer>
-            </ChakraProvider>
-            <Button
-              colorScheme="purple"
-              variant="outline"
-              marginTop={10}
-              rightIcon={<AddIcon />}
-            >
-              Add event
-            </Button>
-          </VStack>
-        </ModalBody>
-        <ModalFooter
-          flexDirection="column"
-          alignItems="center"
-        ></ModalFooter>
-      </>
-      :
-      <Illusion />}
+                              >
+                                <TagLabel>
+                                  {
+                                    status[
+                                    event
+                                      .status
+                                    ]
+                                  }
+                                </TagLabel>
+                              </Tag>
+                            </HStack>
+                          </Td>
+                        </Tr>
+                      ))}
+                    </Tbody>
+                  </Table>
+                </TableContainer>
+              </ChakraProvider>
+              <Button
+                colorScheme="purple"
+                variant="outline"
+                marginTop={10}
+                rightIcon={<AddIcon />}
+              >
+                Add event
+              </Button>
+            </VStack>
+          </ModalBody>
+          <ModalFooter
+            flexDirection="column"
+            alignItems="center"
+          ></ModalFooter>
+        </>
+        :
+        <Illusion />}
+    </>
 
-    </ModalContent>
+
   );
 };
 

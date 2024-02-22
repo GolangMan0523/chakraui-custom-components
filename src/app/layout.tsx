@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 // import `ChakraProvider` component
 import { ChakraProvider } from '@chakra-ui/react'
+import { MyContextProvider  } from "./context/context"
+
 
 import "./globals.css";
 
@@ -20,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ChakraProvider>{children}</ChakraProvider>
+        <MyContextProvider >
+          <ChakraProvider>{children}</ChakraProvider>
+        </MyContextProvider >
       </body>
     </html>
   );

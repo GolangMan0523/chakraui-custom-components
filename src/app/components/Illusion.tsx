@@ -21,7 +21,7 @@ import {
 } from "@chakra-ui/react";
 
 import { useEffect, useState } from "react";
-import ModalCustomBody from "./modalContents";
+import ViewEvents from "./viewEvents";
 
 const Illusion: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure({ defaultIsOpen: false });
@@ -55,7 +55,6 @@ const Illusion: React.FC = () => {
     return (
         <>
             <ModalHeader alignSelf={"center"}>Add Event</ModalHeader>
-            <ModalCloseButton onClick={onClose} />
             <ModalBody overflow={"visible"}>
                 <Box m={[5, 2]}>
                     <Stepper index={activeStep}>
@@ -79,7 +78,7 @@ const Illusion: React.FC = () => {
                     </Stepper>
                 </Box>
                 {/* custom body */}
-                <ModalCustomBody step={currentStep as number} />
+                <ViewEvents step={currentStep as number} />
             </ModalBody>
 
             <ModalFooter flexDirection="column" alignItems="stretch">
