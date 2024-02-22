@@ -1,34 +1,28 @@
 import React from 'react';
 import {
   Box,
-  Grid,
   Text,
   NumberInput,
   NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   InputRightAddon,
   InputGroup,
-  Icon,
   HStack,
   Checkbox
 } from '@chakra-ui/react';
-import { LockIcon } from '@chakra-ui/icons';
 
 function VariantPercentageInput() {
   return (
-    <Box p={5} shadow="md" border="none" borderRadius="md" bg="gray.700" color="white">
+    <Box p={5} shadow="md" border="none" borderRadius="md" bg="gray.700" color="white" w={'100%'} mt={10}>
       <HStack justifyContent="space-between">
         <Text fontSize="xl" fontWeight="bold">
           Variant 1
         </Text>
 
-        <InputGroup maxW="120px">
+        <InputGroup maxW="10vw">
           <NumberInput defaultValue={12} min={0} max={100} clampValueOnBlur={false} >
             <NumberInputField paddingRight="2rem" />
           </NumberInput>
-          <InputRightAddon background="transparent" border="none" />
+          <InputRightAddon background="transparent" border="none">%</InputRightAddon>
         </InputGroup>
         <Checkbox >Default</Checkbox>
       </HStack>

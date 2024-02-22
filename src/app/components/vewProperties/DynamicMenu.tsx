@@ -27,7 +27,7 @@ import { useMyContext } from '../../context/context';
 import { apiVariantData } from '@/app/types/types';
 
 function DynamicMenu() {
-  const { variants, setVariants, setCurrentVariant } = useMyContext();
+  const { variants, setVariants, setCurrentVariant, currentVariant } = useMyContext();
 
   const [newMenuItem, setNewMenuItem] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -35,24 +35,27 @@ function DynamicMenu() {
   const { isOpen, onToggle, onClose, onOpen } = useDisclosure();
   const initialFocusRef = useRef<HTMLInputElement>(null);
 
-  const [selectedItem, setSelectedItem] = useState(variants[0]?.variantName || "Empty");
+  const [selectedItem, setSelectedItem] = useState(currentVariant?.variantName || "Empty");
 
   const handleAddMenuItem = () => {
     if (newMenuItem.trim() !== '') {
       // setMenuItems([...menuItems, newMenuItem]);
-      const newVariant: apiVariantData = {
-        variantName: newMenuItem,
-        properties: [],
-        rules: [],
-        percentage: 0,
-        isDefaultVariant: false
+      if (!variants.find(variant => variant.variantName === newMenuItem)) {
+        const newVariant: apiVariantData = {
+          variantName: newMenuItem,
+          properties: [],
+          rules: [],
+          percentage: 0,
+          isDefaultVariant: false
+        }
+        setVariants([...variants, newVariant])
+        setCurrentVariant(newVariant)
+        setNewMenuItem('');
+        setIsEditing(false);
+        setSelectedItem(newMenuItem);
+        onClose();
       }
-      setVariants([...variants, newVariant])
-      setCurrentVariant(newVariant)
-      setNewMenuItem('');
-      setIsEditing(false);
-      setSelectedItem(newMenuItem);
-      onClose();
+
     }
   };
 
@@ -64,6 +67,7 @@ function DynamicMenu() {
 
   const handleMenuItemSelect = (variant: apiVariantData) => {
     setSelectedItem(variant.variantName);
+    setCurrentVariant(variant);
   };
 
   const handleDeleteMenuItem = (variantName: string) => {
@@ -102,7 +106,7 @@ function DynamicMenu() {
                   {variant?.variantName}
                 </MenuItem>
                 <Menu>
-                  <MenuButton as={IconButton} icon={<SettingsIcon />} variant="outline" size="sm" />
+                  <MenuButton as={IconButton} icon={<SettingsIcon />} variant="outline" size="sm" border={'none'} color={'white'}/>
                   <MenuList >
                     <MenuItem icon={<DeleteIcon />} onClick={() => handleDeleteMenuItem(variant.variantName)} color="black">
                       Delete

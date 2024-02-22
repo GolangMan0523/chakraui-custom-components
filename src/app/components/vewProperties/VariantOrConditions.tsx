@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Button,
@@ -60,10 +60,14 @@ const VariantOrConditions: React.FC = () => {
   const [conditions, setConditions] = useState([{}]);
 
   const addOrCondition = () => setConditions([...conditions, {}]);
+
   const deleteOrCondition = (index: number) => {
     const newConditions = conditions.filter((_, i) => i !== index);
     setConditions(newConditions);
   }
+
+  // useEffect(() => {console.log(conditions)}, [conditions])
+
   return (
     <VStack>
       {conditions.map((condition, index) => (

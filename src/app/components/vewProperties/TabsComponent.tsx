@@ -15,7 +15,7 @@ function TabsComponent() {
   const borderColor = useColorModeValue('gray.200', 'gray.600');
 
   return (
-    <Box p={5} borderRadius="md" boxShadow="md" color={tabColor}>
+    <Box p={5} borderRadius="md" boxShadow="md" color={tabColor} mt={10}>
       <Tabs variant="solid-rounded" colorScheme="teal" align="center" >
         <TabList >
           <Tab width="150px" _selected={{ bg: tabSelectedBg, color: 'white'}}  borderColor="white"  borderWidth="1px"  _focus={{ boxShadow: 'none' }} marginRight={"10%"} >Properties</Tab>

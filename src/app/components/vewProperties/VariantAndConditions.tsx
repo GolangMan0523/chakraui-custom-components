@@ -123,6 +123,8 @@ const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, setConditi
 const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
   const [conditions, setConditions] = useState([{}]);
 
+  useEffect(() => {console.log(conditions)}, [conditions])
+  
   const addCondition = () => setConditions([...conditions, {}]);
 
   const deleteCondition = (index: number) => {

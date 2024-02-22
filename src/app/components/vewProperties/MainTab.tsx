@@ -19,17 +19,21 @@ function MainTab() {
   return (
     <>
       <ModalHeader alignSelf={"center"}>View Properties</ModalHeader>
-      <ModalBody overflow={"visible"}>
-        <Box display={'flex'} justifyContent={'space-between'} mt={5}>
-          <InputComponent />
-          <DynamicMenu />
+      <ModalBody overflow={"visible"} display={'flex'} justifyContent={'center'}>
+        <Box w={'50%'}>
+          <Box display={'flex'} justifyContent={'space-between'} mt={5}>
+            <InputComponent />
+            <DynamicMenu />
+          </Box>
+          <TabsComponent />
         </Box>
-        <TabsComponent />
       </ModalBody>
-      <ModalFooter flexDirection="column" alignItems="center">
-        <Button colorScheme="teal" variant="outline" w={'20%'}>
-          Save
-        </Button>
+      <ModalFooter display="flex" justifyContent="center">
+        <Box w={'50%'} display="flex" justifyContent="right">
+          <Button colorScheme="teal" variant="outline" w={'10%'}>
+            Save
+          </Button>
+        </Box>
       </ModalFooter>
     </>
   );
