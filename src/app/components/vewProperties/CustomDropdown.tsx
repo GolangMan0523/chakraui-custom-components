@@ -8,6 +8,8 @@ import {
     PopoverTrigger,
     PopoverContent,
     useColorModeValue,
+    Checkbox,
+    Box
 } from "@chakra-ui/react";
 import { useMyContext } from '../../context/context';
 
@@ -30,13 +32,14 @@ const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
 
     useEffect(() => {
         const properties: string[] = [];
-        const variant = variants.find(v => v.variantName === currentVariant.variantName)
-        if (variant?.properties) {
-            variant?.properties.forEach(property => {
-                properties.push(property.name)
-            });
-            wordlist = [...properties]
-        }
+        variants.forEach(variant => {
+            if (variant?.properties) {
+                variant?.properties.forEach(property => {
+                    properties.push(property.name)
+                });
+                wordlist = [...properties]
+            }
+        });
     }, [variants, currentVariant])
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -101,13 +104,20 @@ const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
                         paddingLeft="4"
                     />
                 </PopoverTrigger>
-                <PopoverContent borderColor={borderColor} bg={popoverContentBg} zIndex={10002} >
-                    <VStack >
+                <PopoverContent borderColor={borderColor} bg={popoverContentBg} zIndex={10002} w={'100%'}>
+                    <VStack w={'100%'}>
                         {previewList &&
                             previewList.map((item, index) => (
-                                <Text key={index} cursor={'pointer'} onClick={() => handleSet(item)} w='100%' textAlign={'center'} m={4}>
-                                    {item}
-                                </Text>
+                                <Box key={index} display={'flex'} justifyContent={'space-between'} w={'100%'}>
+                                    <Box>
+                                        <Text cursor={'pointer'} onClick={() => handleSet(item)} textAlign={'center'} m={4}>
+                                            {item}
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Checkbox m={4}>Duplicate</Checkbox>
+                                    </Box>
+                                </Box>
                             ))}
                     </VStack>
                 </PopoverContent>

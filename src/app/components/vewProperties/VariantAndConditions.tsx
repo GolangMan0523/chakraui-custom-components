@@ -41,6 +41,7 @@ type ConditionRowProps = {
   setConditionalProperty: (property: string, index: number) => void,
   conditionalVal: ConditionalToRender;
   position: number;
+  status: number;
 };
 
 type ConditionalAndProps = {
@@ -49,7 +50,7 @@ type ConditionalAndProps = {
 
 
 
-const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, setConditionalOperator, setConditionValue, setConditionalProperty, conditionalVal, position }) => {
+const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, setConditionalOperator, setConditionValue, setConditionalProperty, conditionalVal, position, status }) => {
 
   const [currentRule, setCurrentRule] = useState<ruleProperty | null>(userProperties[0]);
 
@@ -60,12 +61,12 @@ const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, setConditi
   return (
     <>
       {
-        conditionalVal.bitOperator === "OR" &&
-        <Button colorScheme="red" onClick={() => onAdd("OR", position)} >
+        (conditionalVal.bitOperator === "OR" && position !== 0) &&
+        <Button colorScheme="red" onClick={() => onAdd("OR", position)} m={3}>
           OR
         </Button>
       }
-      <Box p={5} shadow="md" borderRadius="md" bg="gray.700" color="white" border="dashed">
+      <Box p={5} gap={0} shadow="md"  bg="gray.700" color="white" borderBottom={status>1?"dashed":"none"} borderLeft="dashed" borderRight={"dashed"} borderTop={status%3?"none":"dashed"} borderTopRadius={status%3?"none":"md"} borderBottomRadius={status<2?"none":"md"}>
         <Grid templateColumns="repeat(5, 1fr)" gap={2} alignItems="center" marginTop="10px" >
           <GridItem colSpan={1} >
             <Select border="1px" borderColor={"gray"} onChange={(e) => {
@@ -144,22 +145,22 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
   const addCondition = (bitOperator: string, index: number) => {
     const variant = variants.find(v => v.variantName === currentVariant?.variantName)
     if (variant?.rules) {
-      variant.rules.splice(index+1, 0, { property: "", bitOperator: bitOperator, operator: "", value: "" })
+      variant.rules.splice(index + 1, 0, { property: "", bitOperator: bitOperator, operator: "", value: "" })
       setVariants(variants.filter(variant => variant.variantName !== ""))
       setConditions(variant.rules)
     }
   };
 
+
+
   const deleteCondition = (index: number) => {
     const variant = variants.find(v => v.variantName === currentVariant?.variantName)
-    if (variant?.rules) {
+    if (variant?.rules && conditions.length - 1) {
       const newRules = variant.rules.filter((_, i) => i !== index);
       variant.rules = newRules
       setVariants(variants.filter(variant => variant.variantName !== ""))
       setConditions(newRules);
     }
-    // const newConditions = conditions.filter((_, i) => i !== index);
-    // setConditions(newConditions);
   }
 
   const setConditionalOperator = (operator: string, index: number) => {
@@ -220,15 +221,34 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
     return null;
   }
 
+  const styleProp = (index: number): number => {
+
+    if (index + 1 < conditions.length)
+      if (conditions[index + 1].bitOperator === "AND")
+        if (index === 0 && conditions[index].bitOperator === "AND")
+          return 0;
+        else if (conditions[index].bitOperator === "OR") return 0;
+    if (conditions[index].bitOperator === "AND" && index > 0 && index + 1 < conditions.length)
+      if (conditions[index + 1].bitOperator === "AND")
+        return 1;
+    if (index > 0 && conditions[index].bitOperator === "AND")
+      if (index === conditions.length - 1)
+        return 2;
+      else if (conditions[index + 1].bitOperator === "OR")
+        return 2;
+    return 3;
+  }
+
   return (
     //render this only if conditions.length > 0
 
-    <VStack>
-      {conditions.map((condition, index) => (
-        <ConditionRow key={index} onAdd={addCondition} onDelete={deleteCondition} position={index}
-          setConditionValue={setConditionValue} setConditionalOperator={setConditionalOperator} setConditionalProperty={setConditionalProperty} conditionalVal={condition} />
-      ))}
-      <Button colorScheme="red" onClick={() => addCondition("OR", conditions.length - 1)} >
+    <VStack gap={0}>
+      {conditions.map((condition, index) => {
+        const status = styleProp(index)
+        return <ConditionRow key={index} onAdd={addCondition} onDelete={deleteCondition} position={index}
+          setConditionValue={setConditionValue} setConditionalOperator={setConditionalOperator} setConditionalProperty={setConditionalProperty} conditionalVal={condition} status={status} />
+      })}
+      <Button colorScheme="red" onClick={() => addCondition("OR", conditions.length - 1)} m={3}>
         OR
       </Button>
     </VStack>
