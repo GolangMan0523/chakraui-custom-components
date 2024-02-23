@@ -110,7 +110,7 @@ const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
                             previewList.map((item, index) => (
                                 <Box key={index} display={'flex'} justifyContent={'space-between'} w={'100%'}>
                                     <Box>
-                                        <Text cursor={'pointer'} onClick={() => handleSet(item)} textAlign={'center'} m={4}>
+                                        <Text w={'100%'} cursor={'pointer'} onClick={() => handleSet(item)} textAlign={'center'} m={4}>
                                             {item}
                                         </Text>
                                     </Box>
