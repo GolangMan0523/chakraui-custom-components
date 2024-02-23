@@ -14,7 +14,7 @@ import {
 import {
     DeleteIcon, CloseIcon, AddIcon,
 } from '@chakra-ui/icons';
-import { ComponentProperty, PropertyTypes, apiVariantData } from '../../types/types';
+import { ComponentProperty, PropertyTypes } from '../../types/types';
 import { useMyContext } from '../../context/context';
 import CustomDropDown from './CustomDropdown';
 
@@ -29,7 +29,7 @@ function PropertiesContent() {
     useEffect(() => {
         const variant = variants.find(v => v.variantName === currentVariant?.variantName)
         setPropertiesToRender(variant?.properties || []);
-    }, [currentVariant])
+    }, [currentVariant, variants])
 
     const changePropertyType = (type: PropertyTypes, index: number) => {
         setPropertiesToRender((prevProperties) => {
@@ -71,7 +71,6 @@ function PropertiesContent() {
     };
 
     const addEnumValue = (index: number, value: string) => {
-        console.log("index", index, value);
         const newProperties = [...propertiesToRender];
         if (!newProperties[index].enumValues) {
             newProperties[index].enumValues = [value];
@@ -84,7 +83,6 @@ function PropertiesContent() {
     const renderFormControl = () => {
         return propertiesToRender.map((property, index) => {
             const customPropertyName = property.name;
-            console.log(property.type, property.value, customPropertyName)
             return (
                 <VStack key={index} spacing={0} align="stretch" paddingBottom={4} bg="gray.700" marginTop="10px" padding="10px" border="1px" borderRadius={"20px"} >
                     <FormControl>

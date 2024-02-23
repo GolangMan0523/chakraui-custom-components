@@ -3,19 +3,21 @@ import InputComponent from './InputComponent';
 import DynamicMenu from './DynamicMenu';
 import TabsComponent from './TabsComponent';
 import { Button, ModalHeader, ModalBody, ModalFooter, Box } from '@chakra-ui/react';
-import { apiVariantData } from '../../types/types';
+import { useMyContext } from '../../context/context';
 
 function sleep(ms: number): Promise<void> {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-//call this when Save button is clicked with appropriate data  
-async function callAPI(data: apiVariantData[]) {
-  await sleep(3000);
-  console.log(data);
-}
-
 function MainTab() {
+  const { variants} = useMyContext();
+
+  //call this when Save button is clicked with appropriate data  
+  async function callAPI() {
+    await sleep(3000);
+    console.log(variants);
+  }
+
   return (
     <>
       <ModalHeader alignSelf={"center"}>View Properties</ModalHeader>
@@ -30,7 +32,7 @@ function MainTab() {
       </ModalBody>
       <ModalFooter display="flex" justifyContent="center">
         <Box w={'50%'} display="flex" justifyContent="right">
-          <Button colorScheme="teal" variant="outline" w={'10%'}>
+          <Button colorScheme="teal" variant="outline" w={'10%'} onClick={callAPI}>
             Save
           </Button>
         </Box>

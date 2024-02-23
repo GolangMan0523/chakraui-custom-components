@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Box,
   Button,
   Grid,
   GridItem,
@@ -59,14 +58,16 @@ const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, position }
 const VariantOrConditions: React.FC = () => {
   const [conditions, setConditions] = useState([{}]);
 
-  const addOrCondition = () => setConditions([...conditions, {}]);
+  const addOrCondition = () => {
+    setConditions([...conditions, {
+      bitOperator: "OR"
+    }]);
+  }
 
   const deleteOrCondition = (index: number) => {
     const newConditions = conditions.filter((_, i) => i !== index);
     setConditions(newConditions);
   }
-
-  // useEffect(() => {console.log(conditions)}, [conditions])
 
   return (
     <VStack>

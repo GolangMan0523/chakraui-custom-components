@@ -44,7 +44,7 @@ function DynamicMenu() {
         const newVariant: apiVariantData = {
           variantName: newMenuItem,
           properties: [],
-          rules: [],
+          rules: [{property: "", bitOperator: "AND", operator: "", value: ""}],
           percentage: 0,
           isDefaultVariant: false
         }
@@ -76,7 +76,8 @@ function DynamicMenu() {
     if (!remains.length) {
       setSelectedItem("Empty")
       const emptyVariant: apiVariantData = {
-        variantName: ""
+        variantName: "",
+        isDefaultVariant: false
       }
       setCurrentVariant(emptyVariant)
     }
@@ -106,7 +107,7 @@ function DynamicMenu() {
                   {variant?.variantName}
                 </MenuItem>
                 <Menu>
-                  <MenuButton as={IconButton} icon={<SettingsIcon />} variant="outline" size="sm" border={'none'} color={'white'}/>
+                  <MenuButton as={IconButton} icon={<SettingsIcon />} variant="outline" size="sm" border={'none'} color={'white'} mr={2}/>
                   <MenuList >
                     <MenuItem icon={<DeleteIcon />} onClick={() => handleDeleteMenuItem(variant.variantName)} color="black">
                       Delete

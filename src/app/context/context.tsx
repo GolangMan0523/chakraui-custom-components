@@ -16,7 +16,7 @@ export const MyContextProvider: React.FC<{ children: ReactNode }> = ({ children 
     {
       variantName: "Variant1",
       properties: [],
-      rules: [],
+      rules: [{property: "", bitOperator: "AND", operator: "", value: ""}],
       percentage: 0,
       isDefaultVariant: false
     }

@@ -19,6 +19,7 @@ export enum PropertyTypes {
     property?: string;
     operator?: string;
     value?: string;
+    bitOperator?: string;
   };
   
   export type ruleProperty = { 
@@ -32,7 +33,7 @@ export enum PropertyTypes {
     properties?: ComponentProperty[], 
     rules?: ConditionalToRender[], 
     percentage?: Number
-    isDefaultVariant?: boolean;
+    isDefaultVariant: boolean;
   }
 
   

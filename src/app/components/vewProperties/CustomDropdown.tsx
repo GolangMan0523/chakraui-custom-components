@@ -9,13 +9,16 @@ import {
     PopoverContent,
     useColorModeValue,
 } from "@chakra-ui/react";
+import { useMyContext } from '../../context/context';
 
 type Props = {
     setCustomPropertyName: (name: string) => void;
     setDisabled: (disabled: boolean) => void;
 }
 
-const CustomDropDown = ({setCustomPropertyName, setDisabled}: Props) => {
+let wordlist: string[] = [];
+
+const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
     const borderColor = useColorModeValue("gray.300", "gray.600");
     const popoverContentBg = useColorModeValue("#1a202c", "gray.800");
 
@@ -23,7 +26,18 @@ const CustomDropDown = ({setCustomPropertyName, setDisabled}: Props) => {
     const [open, setOpen] = useState<boolean>(false)
     const [previewList, setPreviewList] = useState<string[]>([]);
 
-    const wordlist = ["abcd", "efgh", "hijk", "lmno"];
+    const { variants, currentVariant } = useMyContext();
+
+    useEffect(() => {
+        const properties: string[] = [];
+        const variant = variants.find(v => v.variantName === currentVariant.variantName)
+        if (variant?.properties) {
+            variant?.properties.forEach(property => {
+                properties.push(property.name)
+            });
+            wordlist = [...properties]
+        }
+    }, [variants, currentVariant])
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const preList = wordlist.filter((word) => word.includes(event.target.value));
@@ -32,7 +46,6 @@ const CustomDropDown = ({setCustomPropertyName, setDisabled}: Props) => {
         }
         else setPreviewList(preList);
         setInputValue(event.target.value);
-        setCustomPropertyName(event.target.value);
     };
 
     const handleCreateClick = () => {
@@ -61,8 +74,10 @@ const CustomDropDown = ({setCustomPropertyName, setDisabled}: Props) => {
         setPreviewList([]);
         if (setStr.includes(`"`)) {
             setInputValue(setStr.split(`"`)[1])
+            setCustomPropertyName(setStr.split(`"`)[1]);
         } else {
             setInputValue(setStr);
+            setCustomPropertyName(setStr);
         }
         setDisabled(false)
     };
@@ -90,7 +105,7 @@ const CustomDropDown = ({setCustomPropertyName, setDisabled}: Props) => {
                     <VStack >
                         {previewList &&
                             previewList.map((item, index) => (
-                                <Text key={index} onClick={() => handleSet(item)} w='100%' textAlign={'center'} m={4}>
+                                <Text key={index} cursor={'pointer'} onClick={() => handleSet(item)} w='100%' textAlign={'center'} m={4}>
                                     {item}
                                 </Text>
                             ))}
