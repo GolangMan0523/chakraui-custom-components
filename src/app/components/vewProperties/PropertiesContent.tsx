@@ -10,6 +10,7 @@ import {
     HStack,
     VStack,
     Tag,
+    Checkbox
 } from '@chakra-ui/react';
 import {
     DeleteIcon, CloseIcon, AddIcon,
@@ -19,12 +20,13 @@ import { useMyContext } from '../../context/context';
 import CustomDropDown from './CustomDropdown';
 
 function PropertiesContent() {
-    const { variants, setVariants, currentVariant } = useMyContext();
+    const { variants, setVariants, currentVariant, duplicatedProperties, setDuplicatedProperties } = useMyContext();
 
     const [propertiesToRender, setPropertiesToRender] = useState<ComponentProperty[]>([]);
     const [isAddingCustomProperty, setIsAddingCustomProperty] = useState(false);
     const [customPropertyName, setCustomPropertyName] = useState('');
     const [disabled, setDisabled] = useState<boolean>(true);
+    const [isDuplicate, setIsDuplicate] = useState<boolean>(false);
 
     useEffect(() => {
         const variant = variants.find(v => v.variantName === currentVariant?.variantName)
@@ -45,11 +47,21 @@ function PropertiesContent() {
         setIsAddingCustomProperty(false);
         const variant = variants.find(v => v.variantName === currentVariant?.variantName)
         if (variant?.properties && !variant.properties.find(property => property.name === name)) {
+            if (isDuplicate) {
+                variants.map(v => {
+                    if (v.variantName !== variant.variantName && v.properties
+                        && !v.properties.find(property => property.name === name)) {
+                        v.properties = [...v.properties || [], { value: '', type: PropertyTypes.TEXT, name }]
+                    }
+                })
+                setDuplicatedProperties([...duplicatedProperties || [], { value: '', type: PropertyTypes.TEXT, name }])
+            }
             const properties = [...variant.properties || [], { value: '', type: PropertyTypes.TEXT, name }]
             if (variant) variant.properties = properties
             setVariants(variants.filter(variant => variant.variantName !== ""))
             setPropertiesToRender(properties);
         }
+        setIsDuplicate(false)
         setDisabled(true)
     };
 
@@ -78,6 +90,10 @@ function PropertiesContent() {
             newProperties[index].enumValues?.push(value);
         }
         setPropertiesToRender(newProperties);
+    }
+
+    const handleDuplicate = () => {
+        setIsDuplicate(prev => !prev)
     }
 
     const renderFormControl = () => {
@@ -195,20 +211,6 @@ function PropertiesContent() {
                     <VStack spacing={0} align="stretch" paddingBottom={4} padding={"3%"}>
                         <HStack spacing={0} width="350px">
 
-                            {/* <Input
-                                type='text'
-                                value={customPropertyName}
-                                placeholder='Enter Custom Property Name'
-                                onChange={(e) => setCustomPropertyName(e.target.value)}
-                                w="full" // Use Chakra UI's "full" instead of "100%" for width
-                                _placeholder={{ color: 'purple.400' }} // Adjusted for Chakra UI color scheme
-                                borderColor="gray.600" // Assuming you want to match the border color in the image
-                                color='white'
-                                border="0px"
-                                borderRadius='md' // Adjusted for Chakra UI's 'md' value which is typically 4px
-                                paddingRight="12" // Adding padding to the right to match the delete icon in the image
-                                paddingLeft="4" // Adjusted padding for consistency in Chakra UI
-                            /> */}
                             <CustomDropDown
                                 setCustomPropertyName={setCustomPropertyName}
                                 setDisabled={setDisabled} />
@@ -227,15 +229,17 @@ function PropertiesContent() {
                                 // If you want the icons without background:
                                 variant="ghost"
                             />
+
+                            <Box>
+                                <Checkbox m={4} isChecked={isDuplicate} onChange={handleDuplicate}>Duplicate</Checkbox>
+                            </Box>
                         </HStack>
                     </VStack>
                 </Box>
-
-
             )}
             <Button
                 colorScheme="purple"
-                isDisabled={isAddingCustomProperty && disabled}
+                // isDisabled={isAddingCustomProperty && disabled}
                 style={{
                     marginTop: '10px',
                     border: '1px solid',

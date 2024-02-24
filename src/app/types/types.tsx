@@ -19,7 +19,8 @@ export enum PropertyTypes {
     property?: string;
     operator?: string;
     value?: string;
-    bitOperator?: string;
+    indexWithinGroup: number;
+    orGroupId: number;
   };
   
   export type ruleProperty = { 

@@ -60,13 +60,8 @@ const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, setConditi
 
   return (
     <>
-      {
-        (conditionalVal.bitOperator === "OR" && position !== 0) &&
-        <Button colorScheme="red" onClick={() => onAdd("OR", position)} m={3}>
-          OR
-        </Button>
-      }
-      <Box p={5} gap={0} shadow="md"  bg="gray.700" color="white" borderBottom={status>1?"dashed":"none"} borderLeft="dashed" borderRight={"dashed"} borderTop={status%3?"none":"dashed"} borderTopRadius={status%3?"none":"md"} borderBottomRadius={status<2?"none":"md"}>
+
+      <Box p={5} gap={0} shadow="md" bg="gray.700" color="white" borderBottom={status > 1 ? "dashed" : "none"} borderLeft="dashed" borderRight={"dashed"} borderTop={status % 3 ? "none" : "dashed"} borderTopRadius={status % 3 ? "none" : "md"} borderBottomRadius={status < 2 ? "none" : "md"}>
         <Grid templateColumns="repeat(5, 1fr)" gap={2} alignItems="center" marginTop="10px" >
           <GridItem colSpan={1} >
             <Select border="1px" borderColor={"gray"} onChange={(e) => {
@@ -127,13 +122,25 @@ const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, setConditi
           </GridItem>
         </Grid>
       </Box>
+      {
+        (status === 2 || status === 3) &&
+        <Button colorScheme="red" onClick={() => onAdd("OR", position)} m={3}>
+          OR
+        </Button>
+      }
     </>
   );
 };
 
 const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
   const { variants, setVariants, currentVariant } = useMyContext();
-  const [conditions, setConditions] = useState<ConditionalToRender[]>([{ property: "", bitOperator: "AND", operator: "", value: "" }]);
+  const [conditions, setConditions] = useState<ConditionalToRender[]>([{
+    property: "",
+    operator: "",
+    value: "",
+    indexWithinGroup: 0,
+    orGroupId: 0
+  }]);
 
   useEffect(() => {
     const variant = variants.find(v => v.variantName === currentVariant?.variantName)
@@ -145,13 +152,19 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
   const addCondition = (bitOperator: string, index: number) => {
     const variant = variants.find(v => v.variantName === currentVariant?.variantName)
     if (variant?.rules) {
-      variant.rules.splice(index + 1, 0, { property: "", bitOperator: bitOperator, operator: "", value: "" })
+      const rule = variant.rules[index]
+      console.log("bitOperator =>", bitOperator)
+      variant.rules.splice(index + 1, 0, {
+        property: "",
+        operator: "",
+        value: "",
+        indexWithinGroup: rule.indexWithinGroup + 1,
+        orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
+      })
       setVariants(variants.filter(variant => variant.variantName !== ""))
       setConditions(variant.rules)
     }
   };
-
-
 
   const deleteCondition = (index: number) => {
     const variant = variants.find(v => v.variantName === currentVariant?.variantName)
@@ -223,20 +236,23 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
 
   const styleProp = (index: number): number => {
 
-    if (index + 1 < conditions.length)
-      if (conditions[index + 1].bitOperator === "AND")
-        if (index === 0 && conditions[index].bitOperator === "AND")
+    if (index + 1 < conditions.length && conditions.length > 1)
+      if (conditions[index].orGroupId === conditions[index + 1].orGroupId)
+        if (index === 0)
           return 0;
-        else if (conditions[index].bitOperator === "OR") return 0;
-    if (conditions[index].bitOperator === "AND" && index > 0 && index + 1 < conditions.length)
-      if (conditions[index + 1].bitOperator === "AND")
-        return 1;
-    if (index > 0 && conditions[index].bitOperator === "AND")
+        else if (conditions[index].orGroupId !== conditions[index - 1].orGroupId)
+          return 0;
+    if (index > 0
+      && index + 1 < conditions.length
+      && conditions[index].orGroupId === conditions[index + 1].orGroupId
+      && conditions[index].orGroupId === conditions[index - 1].orGroupId)
+      return 1;
+    if (index > 0 && conditions[index].orGroupId === conditions[index - 1].orGroupId)
       if (index === conditions.length - 1)
         return 2;
-      else if (conditions[index + 1].bitOperator === "OR")
+      else if (conditions[index].orGroupId !== conditions[index + 1].orGroupId)
         return 2;
-    return 3;
+    return 3
   }
 
   return (
@@ -248,9 +264,9 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
         return <ConditionRow key={index} onAdd={addCondition} onDelete={deleteCondition} position={index}
           setConditionValue={setConditionValue} setConditionalOperator={setConditionalOperator} setConditionalProperty={setConditionalProperty} conditionalVal={condition} status={status} />
       })}
-      <Button colorScheme="red" onClick={() => addCondition("OR", conditions.length - 1)} m={3}>
+      {/* <Button colorScheme="red" onClick={() => addCondition("OR", conditions.length - 1)} m={3}>
         OR
-      </Button>
+      </Button> */}
     </VStack>
   )
 };

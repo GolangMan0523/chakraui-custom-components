@@ -1,12 +1,14 @@
 'use client'
 import React, { useContext, createContext, ReactNode } from 'react';
-import { apiVariantData } from '../types/types'
+import { apiVariantData, ComponentProperty } from '../types/types'
 
 interface MyContextProps {
   variants: Array<apiVariantData>;
   setVariants: (variants: Array<apiVariantData>) => void;
   currentVariant: apiVariantData;
   setCurrentVariant: (variant: apiVariantData) => void;
+  duplicatedProperties: Array<ComponentProperty> | undefined;
+  setDuplicatedProperties: (properties: Array<ComponentProperty>) => void;
 }
 
 const MyContext = createContext<MyContextProps | undefined>(undefined);
@@ -16,7 +18,7 @@ export const MyContextProvider: React.FC<{ children: ReactNode }> = ({ children 
     {
       variantName: "Variant1",
       properties: [],
-      rules: [{property: "", bitOperator: "AND", operator: "", value: ""}],
+      rules: [{property: "", operator: "", value: "", indexWithinGroup: 0, orGroupId: 0}],
       percentage: 0,
       isDefaultVariant: false
     }
@@ -30,8 +32,9 @@ export const MyContextProvider: React.FC<{ children: ReactNode }> = ({ children 
       isDefaultVariant: false
     }
   );
+  const [duplicatedProperties, setDuplicatedProperties] = React.useState<Array<ComponentProperty>>();
 
-  return <MyContext.Provider value={{ variants, setVariants, currentVariant, setCurrentVariant }}>{children}</MyContext.Provider>;
+  return <MyContext.Provider value={{ variants, setVariants, currentVariant, setCurrentVariant, duplicatedProperties, setDuplicatedProperties }}>{children}</MyContext.Provider>;
 };
 
 export const useMyContext = () => {

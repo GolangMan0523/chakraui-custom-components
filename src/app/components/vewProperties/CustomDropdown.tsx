@@ -37,9 +37,9 @@ const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
                 variant?.properties.forEach(property => {
                     properties.push(property.name)
                 });
-                wordlist = [...properties]
             }
         });
+        wordlist = [...new Set(properties)]
     }, [variants, currentVariant])
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +49,7 @@ const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
         }
         else setPreviewList(preList);
         setInputValue(event.target.value);
+        setCustomPropertyName(event.target.value);
     };
 
     const handleCreateClick = () => {
@@ -108,15 +109,10 @@ const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
                     <VStack w={'100%'}>
                         {previewList &&
                             previewList.map((item, index) => (
-                                <Box key={index} display={'flex'} justifyContent={'space-between'} w={'100%'}>
-                                    <Box>
-                                        <Text w={'100%'} cursor={'pointer'} onClick={() => handleSet(item)} textAlign={'center'} m={4}>
-                                            {item}
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Checkbox m={4}>Duplicate</Checkbox>
-                                    </Box>
+                                <Box key={index} w={'100%'} onClick={() => handleSet(item)} cursor={'pointer'}>
+                                    <Text textAlign={'center'} m={4}>
+                                        {item}
+                                    </Text>
                                 </Box>
                             ))}
                     </VStack>
