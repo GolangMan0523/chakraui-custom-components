@@ -61,7 +61,7 @@ const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, setConditi
   return (
     <>
 
-      <Box p={5} gap={0} shadow="md" bg="gray.700" color="white" borderBottom={status > 1 ? "dashed" : "none"} borderLeft="dashed" borderRight={"dashed"} borderTop={status % 3 ? "none" : "dashed"} borderTopRadius={status % 3 ? "none" : "md"} borderBottomRadius={status < 2 ? "none" : "md"}>
+      <Box px={8} pt={5} pb={ status % 4 > 1 ? 6: 0} gap={0} shadow="md" bg="gray.700" color="white" borderBottom={status > 1 ? "dashed" : "none"} borderLeft="dashed" borderRight={"dashed"} borderTop={status % 3 ? "none" : "dashed"} borderTopRadius={status % 3 ? "none" : "md"} borderBottomRadius={status < 2 ? "none" : "md"}>
         <Grid templateColumns="repeat(5, 1fr)" gap={2} alignItems="center" marginTop="10px" >
           <GridItem colSpan={1} >
             <Select border="1px" borderColor={"gray"} onChange={(e) => {
@@ -155,6 +155,13 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
       const rule = variant.rules[index]
       console.log("bitOperator =>", bitOperator)
       variant.rules.splice(index + 1, 0, {
+        property: "",
+        operator: "",
+        value: "",
+        indexWithinGroup: rule.indexWithinGroup + 1,
+        orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
+      })
+      console.log({
         property: "",
         operator: "",
         value: "",
