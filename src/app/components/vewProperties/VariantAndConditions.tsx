@@ -154,20 +154,24 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
     if (variant?.rules) {
       const rule = variant.rules[index]
       console.log("bitOperator =>", bitOperator)
-      variant.rules.splice(index + 1, 0, {
-        property: "",
-        operator: "",
-        value: "",
-        indexWithinGroup: rule.indexWithinGroup + 1,
-        orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
-      })
-      console.log({
-        property: "",
-        operator: "",
-        value: "",
-        indexWithinGroup: rule.indexWithinGroup + 1,
-        orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
-      })
+      if (index !== variant.rules.length - 1) {
+        variant.rules.splice(index + 1, 0, {
+          property: "",
+          operator: "",
+          value: "",
+          indexWithinGroup: rule.indexWithinGroup + 1,
+          orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
+        })
+        if (bitOperator === "OR") variant.rules.map((rule, i) => {if (i > index + 1) rule.orGroupId++})
+      } else {
+        variant.rules.push({
+          property: "",
+          operator: "",
+          value: "",
+          indexWithinGroup: rule.indexWithinGroup + 1,
+          orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
+        })
+      }
       setVariants(variants.filter(variant => variant.variantName !== ""))
       setConditions(variant.rules)
     }
