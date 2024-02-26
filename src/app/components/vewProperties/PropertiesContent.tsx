@@ -84,12 +84,12 @@ function PropertiesContent() {
         setPropertiesToRender((prevProperties) => {
             const newProperties = [...prevProperties];
             newProperties[index].value = value;
-            variants.map(variant => {
-                if (variant.properties) {
-                    const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
-                    if (property) property.value = value;
-                }
-            })
+            // variants.map(variant => {
+            //     if (variant.properties) {
+            //         const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
+            //         if (property) property.value = value;
+            //     }
+            // })
             return newProperties;
         });
     };
@@ -116,18 +116,18 @@ function PropertiesContent() {
             } else {
                 newProperties[index].enumValues?.push(value);
             }
-            variants.map(variant => {
-                if (variant.properties) {
-                    const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
-                    if (property) {
-                        if (!property.enumValues) {
-                            property.enumValues = [value];
-                        } else {
-                            property.enumValues?.push(value);
-                        }
-                    }
-                }
-            })
+            // variants.map(variant => {
+            //     if (variant.properties) {
+            //         const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
+            //         if (property) {
+            //             if (!property.enumValues) {
+            //                 property.enumValues = [value];
+            //             } else {
+            //                 property.enumValues?.push(value);
+            //             }
+            //         }
+            //     }
+            // })
             setPropertiesToRender(newProperties);
         }
     }
@@ -144,9 +144,8 @@ function PropertiesContent() {
                     <FormControl>
                         <FormLabel textColor={"white"}>{customPropertyName}</FormLabel>
                     </FormControl>
-                    <HStack spacing={0} width="350px">
+                    <HStack spacing={0} width="100%"  display={'flex'} justifyContent={'space-between'}>
                         <Select
-
                             // defaultValue={"TEXT"}
                             borderTop={"0px"}
                             borderRight={"0px"}
@@ -223,15 +222,11 @@ function PropertiesContent() {
     return (
         <div
             style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center',
-                alignItems: 'center',
                 marginTop: '10px',
             }}
         >
             {propertiesToRender.length > 0 && (
-                <Box>
+                <Box display={'flex'} flexDirection={'column'} justifyContent={'center'}>
                     {renderFormControl()}
                 </Box>
             )}
@@ -248,7 +243,7 @@ function PropertiesContent() {
                     }}
                     marginTop={4}>
                     <VStack spacing={0} align="stretch" paddingBottom={4} padding={"3%"}>
-                        <HStack spacing={0}>
+                        <HStack spacing={0} display={'flex'} justifyContent={'space-between'}>
 
                             <CustomDropDown
                                 setCustomPropertyName={setCustomPropertyName}

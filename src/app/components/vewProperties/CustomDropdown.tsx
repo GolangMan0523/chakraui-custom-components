@@ -87,7 +87,7 @@ const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
     };
 
     return (
-        <VStack spacing={4} align="stretch">
+        <VStack spacing={4} align="stretch" w={'100%'}>
             <Popover placement="bottom-start" isOpen={open} computePositionOnMount autoFocus={false}>
                 <PopoverTrigger>
                     <Input

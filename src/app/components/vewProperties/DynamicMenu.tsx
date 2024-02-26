@@ -50,7 +50,7 @@ function DynamicMenu() {
       })
 
       tempDuplicatedProperties.map(property => {
-        if (!duplicatedProperties.find(p => p.name === property.name)) duplicatedProperties.push(property)
+        if (!duplicatedProperties.find(p => p.name === property.name)) duplicatedProperties.push({...property, value: "", enumValues: []})
       })
 
       if (!variants.find(variant => variant.variantName === newMenuItem)) {
