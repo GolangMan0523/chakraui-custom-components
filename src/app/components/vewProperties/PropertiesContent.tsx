@@ -56,9 +56,16 @@ function PropertiesContent() {
         if (variant?.properties && !variant.properties.find(property => property.name === name)) {
             if (isDuplicate) {
                 variants.map(v => {
-                    if (v.variantName !== variant.variantName && v.properties
-                        && !v.properties.find(property => property.name === name)) {
-                        v.properties = [...v.properties || [], { value: '', type: PropertyTypes.TEXT, name, isDuplicate: true }]
+                    if (v.variantName !== variant.variantName) {
+                        if (v.properties) {
+                            const property = v.properties.find(property => property.name === name)
+                            if (!property) {
+                                v.properties = [...v.properties || [], { value: '', type: PropertyTypes.TEXT, name, isDuplicate: true }]
+                            } else {
+                                const updatedProperty = v.properties.find(p => p.name === property?.name)
+                                if (updatedProperty) updatedProperty.isDuplicate = true
+                            }
+                        }
                     }
                 })
                 properties = [...variant.properties || [], { value: '', type: PropertyTypes.TEXT, name, isDuplicate: true }]
