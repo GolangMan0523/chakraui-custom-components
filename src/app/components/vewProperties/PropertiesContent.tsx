@@ -73,7 +73,6 @@ function PropertiesContent() {
         });
     };
 
-
     const handleDeleteProperty = (index: number) => {
         const variant = variants.find(v => v.variantName === currentVariant?.variantName)
         const properties = [...variant?.properties || []]
@@ -188,7 +187,6 @@ function PropertiesContent() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginTop: '10px',
-
             }}
         >
             {propertiesToRender.length > 0 && (
@@ -209,7 +207,7 @@ function PropertiesContent() {
                     }}
                     marginTop={4}>
                     <VStack spacing={0} align="stretch" paddingBottom={4} padding={"3%"}>
-                        <HStack spacing={0} width="350px">
+                        <HStack spacing={0}>
 
                             <CustomDropDown
                                 setCustomPropertyName={setCustomPropertyName}
@@ -225,7 +223,7 @@ function PropertiesContent() {
                                 size={"sm"}
                                 colorScheme="red" // You can choose the color scheme that fits your design
                                 borderRadius='md'
-                                marginRight={"10px"}
+                                marginLeft={"10px"}
                                 // If you want the icons without background:
                                 variant="ghost"
                             />
@@ -243,7 +241,7 @@ function PropertiesContent() {
                 style={{
                     marginTop: '10px',
                     border: '1px solid',
-                    borderRadius: '5px'
+                    borderRadius: '5px',
                 }}
                 variant={"outline"}
                 onClick={() => isAddingCustomProperty ? addCustomProperty(customPropertyName) : setIsAddingCustomProperty(true)}>{isAddingCustomProperty ? "Add Property" : "Create Property"}</Button>

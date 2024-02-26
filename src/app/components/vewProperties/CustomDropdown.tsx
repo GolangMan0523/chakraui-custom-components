@@ -101,8 +101,6 @@ const CustomDropDown = ({ setCustomPropertyName, setDisabled }: Props) => {
                         color='white'
                         border="0px"
                         borderRadius='md' // Adjusted for Chakra UI's 'md' value which is typically 4px
-                        paddingRight="12" // Adding padding to the right to match the delete icon in the image
-                        paddingLeft="4"
                     />
                 </PopoverTrigger>
                 <PopoverContent borderColor={borderColor} bg={popoverContentBg} zIndex={10002} w={'100%'}>
