@@ -100,7 +100,7 @@ function PropertiesContent() {
         console.log(properties)
         variants.map(v => {
             if (variant && variant.variantName !== v.variantName && v.properties) {
-                const newProperties = v.properties.filter(property => property.name !== properties[index].name && !property.isDuplicate)
+                const newProperties = v.properties.filter(property => !(property.name === properties[index].name && property.isDuplicate))
                 v.properties = newProperties;
                 console.log(newProperties)
             }
