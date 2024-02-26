@@ -97,10 +97,12 @@ function PropertiesContent() {
     const handleDeleteProperty = (index: number) => {
         const variant = variants.find(v => v.variantName === currentVariant?.variantName)
         const properties = [...variant?.properties || []]
+        console.log(properties)
         variants.map(v => {
             if (variant && variant.variantName !== v.variantName && v.properties) {
-                const newProperties = v.properties.filter(property => property.name !== properties[index].name && property.isDuplicate)
+                const newProperties = v.properties.filter(property => property.name !== properties[index].name && !property.isDuplicate)
                 v.properties = newProperties;
+                console.log(newProperties)
             }
         })
         properties.splice(index, 1);
@@ -144,7 +146,7 @@ function PropertiesContent() {
                     <FormControl>
                         <FormLabel textColor={"white"}>{customPropertyName}</FormLabel>
                     </FormControl>
-                    <HStack spacing={0} width="100%"  display={'flex'} justifyContent={'space-between'}>
+                    <HStack spacing={0} width="100%" display={'flex'} justifyContent={'space-between'}>
                         <Select
                             // defaultValue={"TEXT"}
                             borderTop={"0px"}
