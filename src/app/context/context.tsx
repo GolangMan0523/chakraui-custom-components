@@ -18,7 +18,7 @@ export const MyContextProvider: React.FC<{ children: ReactNode }> = ({ children 
     {
       variantName: "Variant1",
       properties: [],
-      rules: [{property: "", operator: "", value: "", indexWithinGroup: 0, orGroupId: 0}],
+      rules: [{property: "User Id", operator: "equals", value: "", indexWithinGroup: 0, orGroupId: 0}],
       percentage: 0,
       isDefaultVariant: false
     }
