@@ -36,10 +36,10 @@ function PropertiesContent() {
     const changePropertyType = (type: PropertyTypes, index: number) => {
         setPropertiesToRender((prevProperties) => {
             const newProperties = [...prevProperties];
-            // newProperties[index].type = type;
+            newProperties[index].type = type;
             variants.map(variant => {
                 if (variant.properties) {
-                    const property = variant.properties.find(property => property.name === newProperties[index].name)
+                    const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
                     if (property) property.type = type;
                 }
             })
@@ -76,10 +76,10 @@ function PropertiesContent() {
     const handleInputChange = (value: string, index: number) => {
         setPropertiesToRender((prevProperties) => {
             const newProperties = [...prevProperties];
-            // newProperties[index].value = value;
+            newProperties[index].value = value;
             variants.map(variant => {
                 if (variant.properties) {
-                    const property = variant.properties.find(property => property.name === newProperties[index].name)
+                    const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
                     if (property) property.value = value;
                 }
             })
@@ -92,7 +92,7 @@ function PropertiesContent() {
         const properties = [...variant?.properties || []]
         variants.map(v => {
             if (variant && variant.variantName !== v.variantName && v.properties) {
-                const newProperties = v.properties.filter(property => property.name !== properties[index].name)
+                const newProperties = v.properties.filter(property => property.name !== properties[index].name && property.isDuplicate)
                 v.properties = newProperties;
             }
         })
@@ -104,9 +104,14 @@ function PropertiesContent() {
     const addEnumValue = (index: number, value: string) => {
         if (value.length) {
             const newProperties = [...propertiesToRender];
+            if (!newProperties[index].enumValues) {
+                newProperties[index].enumValues = [value];
+            } else {
+                newProperties[index].enumValues?.push(value);
+            }
             variants.map(variant => {
                 if (variant.properties) {
-                    const property = variant.properties.find(property => property.name === newProperties[index].name)
+                    const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
                     if (property) {
                         if (!property.enumValues) {
                             property.enumValues = [value];
