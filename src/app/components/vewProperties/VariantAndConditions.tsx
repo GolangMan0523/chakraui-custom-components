@@ -159,16 +159,17 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
           property: "",
           operator: "",
           value: "",
-          indexWithinGroup: rule.indexWithinGroup + 1,
+          indexWithinGroup: bitOperator === "AND" ? rule.indexWithinGroup + 1: 0,
           orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
         })
-        if (bitOperator === "OR") variant.rules.map((rule, i) => {if (i > index + 1) rule.orGroupId++})
+        if (bitOperator === "OR") variant.rules.map((r, i) => {if (i > index + 1) r.orGroupId++})
+        else variant.rules.map((r, i) => {if (i > index + 1 && rule.orGroupId === r.orGroupId) r.indexWithinGroup++})
       } else {
         variant.rules.push({
           property: "",
           operator: "",
           value: "",
-          indexWithinGroup: rule.indexWithinGroup + 1,
+          indexWithinGroup: bitOperator === "AND" ? rule.indexWithinGroup + 1: 0,
           orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
         })
       }
@@ -180,7 +181,13 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
   const deleteCondition = (index: number) => {
     const variant = variants.find(v => v.variantName === currentVariant?.variantName)
     if (variant?.rules && conditions.length - 1) {
+      const deletedRule = variant.rules[index]
       const newRules = variant.rules.filter((_, i) => i !== index);
+      newRules.map((rule, i) => {
+        if (deletedRule.orGroupId === rule.orGroupId && i >= index) {
+          rule.indexWithinGroup--;
+        }
+      });
       variant.rules = newRules
       setVariants(variants.filter(variant => variant.variantName !== ""))
       setConditions(newRules);
