@@ -24,10 +24,10 @@ import {
   ChevronDownIcon, CheckIcon, CloseIcon, AddIcon, DeleteIcon, HamburgerIcon, SettingsIcon
 } from '@chakra-ui/icons';
 import { useMyContext } from '../../context/context';
-import { apiVariantData } from '@/app/types/types';
+import { apiVariantData, ComponentProperty } from '@/app/types/types';
 
 function DynamicMenu() {
-  const { variants, setVariants, setCurrentVariant, currentVariant, duplicatedProperties } = useMyContext();
+  const { variants, setVariants, setCurrentVariant, currentVariant } = useMyContext();
 
   const [newMenuItem, setNewMenuItem] = useState('');
   const [isEditing, setIsEditing] = useState(false);
@@ -40,13 +40,26 @@ function DynamicMenu() {
   const handleAddMenuItem = () => {
     if (newMenuItem.trim() !== '') {
       // setMenuItems([...menuItems, newMenuItem]);
+      let tempDuplicatedProperties : ComponentProperty[] = []
+      let duplicatedProperties : ComponentProperty[] = []
+      variants.map(variant => {
+        if (variant.properties) {
+          const Properties = variant.properties.filter(property => property.isDuplicate)
+          tempDuplicatedProperties = [...tempDuplicatedProperties, ...Properties]
+        }
+      })
+
+      tempDuplicatedProperties.map(property => {
+        if (!duplicatedProperties.find(p => p.name === property.name)) duplicatedProperties.push(property)
+      })
+
       if (!variants.find(variant => variant.variantName === newMenuItem)) {
         const newVariant: apiVariantData = {
           variantName: newMenuItem,
           properties: [...duplicatedProperties || []],
           rules: [{
-            property: "",
-            operator: "",
+            property: "User Id",
+            operator: "equals",
             value: "",
             indexWithinGroup: 0,
             orGroupId: 0

@@ -20,7 +20,7 @@ import { useMyContext } from '../../context/context';
 import CustomDropDown from './CustomDropdown';
 
 function PropertiesContent() {
-    const { variants, setVariants, currentVariant, duplicatedProperties, setDuplicatedProperties } = useMyContext();
+    const { variants, setVariants, currentVariant } = useMyContext();
 
     const [propertiesToRender, setPropertiesToRender] = useState<ComponentProperty[]>([]);
     const [isAddingCustomProperty, setIsAddingCustomProperty] = useState(false);
@@ -36,7 +36,13 @@ function PropertiesContent() {
     const changePropertyType = (type: PropertyTypes, index: number) => {
         setPropertiesToRender((prevProperties) => {
             const newProperties = [...prevProperties];
-            newProperties[index].type = type;
+            // newProperties[index].type = type;
+            variants.map(variant => {
+                if (variant.properties) {
+                    const property = variant.properties.find(property => property.name === newProperties[index].name)
+                    if (property) property.type = type;
+                }
+            })
             return newProperties;
         });
     }
@@ -46,17 +52,19 @@ function PropertiesContent() {
         setCustomPropertyName('');
         setIsAddingCustomProperty(false);
         const variant = variants.find(v => v.variantName === currentVariant?.variantName)
+        let properties: ComponentProperty[] = []
         if (variant?.properties && !variant.properties.find(property => property.name === name)) {
             if (isDuplicate) {
                 variants.map(v => {
                     if (v.variantName !== variant.variantName && v.properties
                         && !v.properties.find(property => property.name === name)) {
-                        v.properties = [...v.properties || [], { value: '', type: PropertyTypes.TEXT, name }]
+                        v.properties = [...v.properties || [], { value: '', type: PropertyTypes.TEXT, name, isDuplicate: true }]
                     }
                 })
-                setDuplicatedProperties([...duplicatedProperties || [], { value: '', type: PropertyTypes.TEXT, name }])
+                properties = [...variant.properties || [], { value: '', type: PropertyTypes.TEXT, name, isDuplicate: true }]
+            } else {
+                properties = [...variant.properties || [], { value: '', type: PropertyTypes.TEXT, name, isDuplicate: false }]
             }
-            const properties = [...variant.properties || [], { value: '', type: PropertyTypes.TEXT, name }]
             if (variant) variant.properties = properties
             setVariants(variants.filter(variant => variant.variantName !== ""))
             setPropertiesToRender(properties);
@@ -68,7 +76,13 @@ function PropertiesContent() {
     const handleInputChange = (value: string, index: number) => {
         setPropertiesToRender((prevProperties) => {
             const newProperties = [...prevProperties];
-            newProperties[index].value = value;
+            // newProperties[index].value = value;
+            variants.map(variant => {
+                if (variant.properties) {
+                    const property = variant.properties.find(property => property.name === newProperties[index].name)
+                    if (property) property.value = value;
+                }
+            })
             return newProperties;
         });
     };
@@ -76,19 +90,34 @@ function PropertiesContent() {
     const handleDeleteProperty = (index: number) => {
         const variant = variants.find(v => v.variantName === currentVariant?.variantName)
         const properties = [...variant?.properties || []]
+        variants.map(v => {
+            if (variant && variant.variantName !== v.variantName && v.properties) {
+                const newProperties = v.properties.filter(property => property.name !== properties[index].name)
+                v.properties = newProperties;
+            }
+        })
         properties.splice(index, 1);
         if (variant) variant.properties = properties
         setPropertiesToRender(properties);
     };
 
     const addEnumValue = (index: number, value: string) => {
-        const newProperties = [...propertiesToRender];
-        if (!newProperties[index].enumValues) {
-            newProperties[index].enumValues = [value];
-        } else {
-            newProperties[index].enumValues?.push(value);
+        if (value.length) {
+            const newProperties = [...propertiesToRender];
+            variants.map(variant => {
+                if (variant.properties) {
+                    const property = variant.properties.find(property => property.name === newProperties[index].name)
+                    if (property) {
+                        if (!property.enumValues) {
+                            property.enumValues = [value];
+                        } else {
+                            property.enumValues?.push(value);
+                        }
+                    }
+                }
+            })
+            setPropertiesToRender(newProperties);
         }
-        setPropertiesToRender(newProperties);
     }
 
     const handleDuplicate = () => {
@@ -106,13 +135,13 @@ function PropertiesContent() {
                     <HStack spacing={0} width="350px">
                         <Select
 
-                            defaultValue={"TEXT"}
+                            // defaultValue={"TEXT"}
                             borderTop={"0px"}
                             borderRight={"0px"}
                             borderBottom={"0px"}
                             borderLeft={"0px"}
                             color="gray.500"
-
+                            value={property.type}
                             onChange={(e) => changePropertyType(e.target.value as any, index)}
                             w="full" // Set width to full to take up all available space
                         // onChange, value, etc...

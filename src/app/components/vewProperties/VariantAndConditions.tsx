@@ -135,8 +135,8 @@ const ConditionRow: React.FC<ConditionRowProps> = ({ onAdd, onDelete, setConditi
 const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
   const { variants, setVariants, currentVariant } = useMyContext();
   const [conditions, setConditions] = useState<ConditionalToRender[]>([{
-    property: "",
-    operator: "",
+    property: "User Id",
+    operator: "equals",
     value: "",
     indexWithinGroup: 0,
     orGroupId: 0
@@ -156,8 +156,8 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
       console.log("bitOperator =>", bitOperator)
       if (index !== variant.rules.length - 1) {
         variant.rules.splice(index + 1, 0, {
-          property: "",
-          operator: "",
+          property: "User Id",
+          operator: "equals",
           value: "",
           indexWithinGroup: bitOperator === "AND" ? rule.indexWithinGroup + 1: 0,
           orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1
@@ -166,8 +166,8 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
         else variant.rules.map((r, i) => {if (i > index + 1 && rule.orGroupId === r.orGroupId) r.indexWithinGroup++})
       } else {
         variant.rules.push({
-          property: "",
-          operator: "",
+          property: "User Id",
+          operator: "equals",
           value: "",
           indexWithinGroup: bitOperator === "AND" ? rule.indexWithinGroup + 1: 0,
           orGroupId: bitOperator === "AND" ? rule.orGroupId : rule.orGroupId + 1

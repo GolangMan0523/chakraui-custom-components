@@ -12,6 +12,7 @@ export enum PropertyTypes {
     type: PropertyTypes;
     enumValues?: string[];
     name: string;
+    isDuplicate: boolean;
   }
   
   
