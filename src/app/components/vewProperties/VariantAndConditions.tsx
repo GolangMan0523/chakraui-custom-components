@@ -244,7 +244,8 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
           } else {
             return {
               ...condition,
-              property
+              property,
+              value: ""
             }
           }
         }
