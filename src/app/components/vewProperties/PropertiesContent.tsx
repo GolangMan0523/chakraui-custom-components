@@ -43,7 +43,10 @@ function PropertiesContent() {
             variants.map(variant => {
                 if (variant.properties) {
                     const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
-                    if (property) property.type = type;
+                    if (property) {
+                        property.type = type
+                        if (type === "COLOR") handleInputChange("#000000", index)
+                    };
                 }
             })
             return newProperties;
