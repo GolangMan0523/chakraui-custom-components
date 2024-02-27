@@ -45,7 +45,7 @@ function PropertiesContent() {
                     const property = variant.properties.find(property => property.name === newProperties[index].name && property.isDuplicate)
                     if (property) {
                         property.type = type
-                        if (type === "COLOR") handleInputChange("#000000", index)
+                        if (type === "COLOR") property.value="#000000"
                     };
                 }
             })
