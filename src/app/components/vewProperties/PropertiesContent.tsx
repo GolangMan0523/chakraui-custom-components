@@ -34,6 +34,9 @@ function PropertiesContent() {
     }, [currentVariant, variants])
 
     const changePropertyType = (type: PropertyTypes, index: number) => {
+        if (type === "COLOR") handleInputChange("#000000", index)
+        else  handleInputChange("", index)
+        
         setPropertiesToRender((prevProperties) => {
             const newProperties = [...prevProperties];
             newProperties[index].type = type;
