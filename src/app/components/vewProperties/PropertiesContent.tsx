@@ -97,12 +97,10 @@ function PropertiesContent() {
     const handleDeleteProperty = (index: number) => {
         const variant = variants.find(v => v.variantName === currentVariant?.variantName)
         const properties = [...variant?.properties || []]
-        console.log(properties)
         variants.map(v => {
             if (variant && variant.variantName !== v.variantName && v.properties) {
                 const newProperties = v.properties.filter(property => !(property.name === properties[index].name && property.isDuplicate))
                 v.properties = newProperties;
-                console.log(newProperties)
             }
         })
         properties.splice(index, 1);
