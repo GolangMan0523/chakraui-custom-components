@@ -235,9 +235,17 @@ const VariantAndConditions: React.FC<ConditionalAndProps> = ({ onAddOr }) => {
     if (variant?.rules) {
       const newConditions = variant.rules.map((condition, i) => {
         if (i === index) {
-          return {
-            ...condition,
-            property
+          if (property === "User Plan") {
+            return {
+              ...condition,
+              property,
+              value: "Free"
+            }
+          } else {
+            return {
+              ...condition,
+              property
+            }
           }
         }
         return condition;
